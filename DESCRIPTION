@@ -1,0 +1,39 @@
+Package: alignstatplot
+Type: Package
+Title: Statistical analysis of sequence alignment and creation of fancy plots
+Version: 0.1.0
+Author: Alsamman M. Alsamman <smahmoud@ageri.sci.eg>
+Maintainer: Alsamman M. Alsamman <smahmoud@ageri.sci.eg>
+Description: Statistical analysis of sequence alignment and creation of fancy plots
+    It performs nucleotide sequence alignment and basic analysis procedures such as 
+    single nucleotide filtering, data conversion, diversity analysis, 
+    and producing new and innovative visualisations to identify variations.
+License: GPL-3
+Imports: seqinr ,
+  FactoMineR , 
+  circlize , 
+  cowplot , 
+  dplyr , 
+  forcats , 
+  ggpubr , 
+  patchwork , 
+  phytools , 
+  tidyr , 
+  tidyverse , 
+  ape , 
+  factoextra , 
+  pheatmap , 
+  plyr , 
+  reshape2 , 
+  seqinr , 
+  gggenes , 
+  ggseqlogo,
+  BiocManager,
+  msa,
+  ggtree,
+  pals
+Remotes: UBod/msa
+Encoding: UTF-8
+LazyLoad: true
+LazyData: true
+RoxygenNote: 7.2.0
