@@ -68,11 +68,14 @@ AlignFile<-system.file("extdata","Example_Sequences_Aligned.aln",package = "alig
 
 SeqFormat<-"clustalw" #clustalw or fasta   #input format
 SeqFontSize<-0.5      # font label size
-pdf("plot.pdf")
+#pdf(paste0(OutFolder,"/","AlignPlot.pdf"),width = 15,height = 15)
 plotAlignCircle(AlignFile,SeqFormat = "clustalw",SeqFontSize = 0.5)
-dev.off()
-#> png 
-#>   2
+```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+``` r
+#dev.off()
 ```
 
 ## More deep analysis
