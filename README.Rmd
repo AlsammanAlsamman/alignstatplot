@@ -57,6 +57,22 @@ cex.SeqLabels<-0.5 #Sequence labels font sizes
  #               Verbose)
 
 ```
+
+## Plot Sequence alignment using one function
+Alignstatplot can be used to plot sequence alignment file. The function can import sequence alignment in FASTA or clustalw
+
+```{r}
+
+AlignFile<-system.file("extdata","Example_Sequences_Aligned.aln",package = "alignstatplot")
+#AlignFile<-system.file("extdata","Example_Sequences_Aligned.fasta",package = "alignstatplot")
+
+SeqFormat<-"clustalw" #clustalw or fasta   #input format
+SeqFontSize<-0.5      # font label size
+pdf("plot.pdf")
+plotAlignCircle(AlignFile,SeqFormat = "clustalw",SeqFontSize = 0.5)
+dev.off()
+
+```
 ## More deep analysis
 Example files can be used from the package.
 
@@ -89,7 +105,7 @@ Performing sequence alignment using the chosen tool.
 ```{r}
 #Align DNA sequences using clustalw
 myClustalWAlignment <- seqAlign(SeqFile,AlignMethod)
-myClustalWAlignment
+
 #extract sequence information
 SeqInfo<-getSeqInfo(SeqFile)
 #Convert sequence to list

@@ -56,6 +56,25 @@ cex.SeqLabels<-0.5 #Sequence labels font sizes
  #               Verbose)
 ```
 
+## Plot Sequence alignment using one function
+
+Alignstatplot can be used to plot sequence alignment file. The function
+can import sequence alignment in FASTA or clustalw
+
+``` r
+
+AlignFile<-system.file("extdata","Example_Sequences_Aligned.aln",package = "alignstatplot")
+#AlignFile<-system.file("extdata","Example_Sequences_Aligned.fasta",package = "alignstatplot")
+
+SeqFormat<-"clustalw" #clustalw or fasta   #input format
+SeqFontSize<-0.5      # font label size
+pdf("plot.pdf")
+plotAlignCircle(AlignFile,SeqFormat = "clustalw",SeqFontSize = 0.5)
+dev.off()
+#> png 
+#>   2
+```
+
 ## More deep analysis
 
 Example files can be used from the package.
@@ -91,25 +110,7 @@ Performing sequence alignment using the chosen tool.
 #Align DNA sequences using clustalw
 myClustalWAlignment <- seqAlign(SeqFile,AlignMethod)
 #> use default substitution matrix
-myClustalWAlignment
-#> CLUSTAL 2.1  
-#> 
-#> Call:
-#>    msa(inputSeqs = SeqFile, method = AlignMethod, type = SeqType,     order = order)
-#> 
-#> MsaDNAMultipleAlignment with 10 rows and 1041 columns
-#>      aln 
-#>  [1] -----GGCGTGCCTAACACATGCAAGTCGAACGG-A...CCGGTCCGTAACGGG--------------------
-#>  [2] -TGGCGGCATGCCTAATACATGCAAGTCGAGCG-AA...-----------------------------------
-#>  [3] CTGGCGGCGTGCCTAACACATGCAAGTCGAGCGGTA...-----------------------------------
-#>  [4] --GGCGGCGTGCCTAATACATGCAAGTCAAGCG-GA...-----------------------------------
-#>  [5] ---GCGGCGTGCCTAATACATGCAAGTCGAGCG-GA...-----------------------------------
-#>  [6] --GGCGGCGTGCCTAATACATGCAAGTCGAGCG-GA...-----------------------------------
-#>  [7] -----------------ACATGCAAGTCGAGCGG-A...CAATCCTAGAGAT----------------------
-#>  [8] CTGGCGGCGTGCTTAACACATGCAAGTCGAACGGAG...-----------------------------------
-#>  [9] CTGGCGGCGTGCCTAACACATGCAAGTCGAGCG-GA...CAACCCTAGAGATAGGGCGTTCCCC----------
-#> [10] -------------------ATGCAAGTCGAACGAGA...CAATCCTAGAGATAGGACGTTCCCCTTCGGGGACA
-#>  Con --GGCGGCGTGCCTAA?ACATGCAAGTCGAGCG-GA...-----------------------------------
+
 #extract sequence information
 SeqInfo<-getSeqInfo(SeqFile)
 #Convert sequence to list
@@ -155,7 +156,7 @@ genes it will not recognizable
 drawConsWithGenes(SeqInfo,SeqAligned)
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 ``` r
 #dev.off()
@@ -169,7 +170,7 @@ Plot Sequence alignment with consensus and No links
 drawConsWithNoGenes(SeqInfo,SeqAligned,cex.SeqLabels = 1)
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 ``` r
 #dev.off()
@@ -236,7 +237,7 @@ knitr::include_graphics(paste0("Example_Out","/SeqAlignmentCircleWithNoLinks.png
 distanceHeatmap(DistTable,fontsizescale = 0.2)
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
 
 ## Phylogenetic tree simple plot
 
@@ -245,14 +246,14 @@ distanceHeatmap(DistTable,fontsizescale = 0.2)
 plotTreeWithRuler(SeqInfo,myClustalWAlignment)
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
 
 ``` r
 #The phylogenetic tree in combine with gene structure
 plotTreeWithGenes(SeqInfo,myClustalWAlignment,AnnoFile)
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
 
 ``` r
 #The phylogenetic tree in combine with simialrity matrix
@@ -260,7 +261,7 @@ plotTreeWithGenes(SeqInfo,myClustalWAlignment,AnnoFile)
 plotSimilarityMatrixWithTree(SeqInfo,myClustalWAlignment)
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
 
     #> NULL
 
@@ -275,7 +276,7 @@ plotPCA(SeqInfo,myClustalWAlignment,ncluster = 4)
 #> Warning: argument frame.type is deprecated; please use ellipse.type instead.
 ```
 
-<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" />
 
 ``` r
 # ggsave(plot=p,paste0(OutFolder,"/","Genes_PCA.pdf"),device = "pdf",
@@ -325,7 +326,7 @@ alignment
 nucTableFreqHeatmap(SeqAlignedTableFiltered[,1:50])
 ```
 
-<img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-17-1.png" width="100%" />
 
 ``` r
 
@@ -443,7 +444,7 @@ the loci (SNPs)
 SNPClusterPlot3DTree(Cluster,60)
 ```
 
-<img src="man/figures/README-unnamed-chunk-23-1.png" width="100%" /> \##
+<img src="man/figures/README-unnamed-chunk-24-1.png" width="100%" /> \##
 One Dimension Tree 2D phylogenetic tree
 
 ``` r
@@ -452,14 +453,14 @@ SNPClusterPlot1DTree(Cluster)
 #> "none")` instead.
 ```
 
-<img src="man/figures/README-unnamed-chunk-24-1.png" width="100%" /> \##
+<img src="man/figures/README-unnamed-chunk-25-1.png" width="100%" /> \##
 PCA Plot
 
 ``` r
 SNPClusterPlotPCAMap(Cluster)
 ```
 
-<img src="man/figures/README-unnamed-chunk-25-1.png" width="100%" /> \##
+<img src="man/figures/README-unnamed-chunk-26-1.png" width="100%" /> \##
 Drawing genes with cluster Map Draw the SNP location and assign the
 cluster to the genes. The function takes a sequence, a sequence
 alignment object, and the number of base pairs to consider as a cluster.
@@ -474,7 +475,7 @@ are unaffected by differences in gene length.
 SNPClusterPlot(SeqInfo,SeqAligned,Cluster,MaxCluster = 3,MinimumClusterLength = 3)
 ```
 
-<img src="man/figures/README-unnamed-chunk-26-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-27-1.png" width="100%" />
 
 Add the phylogenetic tree to the plot.
 
@@ -483,7 +484,7 @@ Add the phylogenetic tree to the plot.
 SNPClusterPlotWithTree(SeqInfo,myClustalWAlignment,Cluster,MaxCluster = 3, MinimumClusterLength = 3)
 ```
 
-<img src="man/figures/README-unnamed-chunk-27-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-28-1.png" width="100%" />
 
 ``` r
 
