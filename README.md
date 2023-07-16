@@ -11,6 +11,10 @@ variability and can be combined with other analysis tools for studying
 diversity. In this documentation, we will demonstrate how to use it and
 how it can be combined with other well-known R packages.
 
+The tool is available online : 
+
+https://bioinformatics.um6p.ma/AlignStatPlot/
+
 ## Installation
 
 You can install the development version of alignstatplot like so:
