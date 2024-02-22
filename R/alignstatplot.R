@@ -15,7 +15,7 @@
 #' @export
 
 alignstatplot<-function(SeqFile,AlignMethod="ClustalW",AnnoFile="",OutFolder="output",MaxMissPer=0.2,
-                        MaxCluster = 4,MinimumClusterLength = 3,Verbose=T)
+                        MaxCluster = 4,MinimumClusterLength = 3,Verbose=T, fontscale = 0)
 {
   if (Verbose==T) print(paste("Create Output Folder ",OutFolder))
   dir.create(file.path(OutFolder), showWarnings = FALSE)
@@ -23,9 +23,20 @@ alignstatplot<-function(SeqFile,AlignMethod="ClustalW",AnnoFile="",OutFolder="ou
   myClustalWAlignment <- seqAlign(SeqFile,AlignMethod)
   #extract sequence information
   SeqInfo<-getSeqInfo(SeqFile)
-
-
+  
   Seqn<-nrow(SeqInfo)
+  
+  # calculate the font size for the sequence alignment plot if 
+  if (Seqn>30 and Seqn<50 and fontscale==0) {
+    fontscale = 0.5
+  }
+  else if (Seqn>50 and Seqn<100 and fontscale==0) {
+    fontscale = 0.3
+  }
+  else if (Seqn>100 and fontscale==0) {
+    fontscale = 0.1
+  }
+
   #Convert sequence to list
   SeqAligned<-alignment2Fasta(myClustalWAlignment,SeqInfo)
   if (Verbose==T) print(paste("Save Alignment as Fasta "))
@@ -47,7 +58,7 @@ alignstatplot<-function(SeqFile,AlignMethod="ClustalW",AnnoFile="",OutFolder="ou
   if (Verbose==T) print(paste("Plot Sequence alignment with consensus and No links"))
   #Plot Sequence alignment with consensus and No links
   pdf(paste0(OutFolder,"/","SeqAlignmentCircleWithNoLinks.pdf"),width = 15,height = 15)
-  drawConsWithNoGenes(SeqInfo,SeqAligned,cex.SeqLabels = 1)
+  drawConsWithNoGenes(SeqInfo,SeqAligned,cex.SeqLabels = fontscale)
   dev.off()
 
   if (Verbose==T) print(paste("Phylogenetic trees analysis"))
@@ -68,8 +79,8 @@ alignstatplot<-function(SeqFile,AlignMethod="ClustalW",AnnoFile="",OutFolder="ou
 
   if (Verbose==T) print(paste("Plot similarity distance matrix"))
   ## Similarity distance matrix
-  pdf(paste0(OutFolder,"/","Distance_Matrix.pdf"),width = 15,height = 15)
-  distanceHeatmap(DistTable,fontsizescale = 1)
+  pdf(paste0(OutFolder,"/","Distance_Matrix.pdf"),width = 15 + nrow(SeqInfo)/5,height = 15 + nrow(SeqInfo)/5)
+  distanceHeatmap(DistTable,fontsizescale = fontscale)
   dev.off()
 
   if (Verbose==T) print(paste("Phylogenetic tree simple plot"))
@@ -194,4 +205,3 @@ alignstatplot<-function(SeqFile,AlignMethod="ClustalW",AnnoFile="",OutFolder="ou
 
   print(paste("All analyses were completed successfully and saved to a folder:" ,OutFolder))
 }
-
