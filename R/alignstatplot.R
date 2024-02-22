@@ -27,13 +27,13 @@ alignstatplot<-function(SeqFile,AlignMethod="ClustalW",AnnoFile="",OutFolder="ou
   Seqn<-nrow(SeqInfo)
   
   # calculate the font size for the sequence alignment plot if 
-  if (Seqn>30 and Seqn<50 and fontscale==0) {
+  if (Seqn>30 && Seqn<50 && fontscale==0) {
     fontscale = 0.5
   }
-  else if (Seqn>50 and Seqn<100 and fontscale==0) {
+  else if (Seqn>50 && Seqn<100 && fontscale==0) {
     fontscale = 0.3
   }
-  else if (Seqn>100 and fontscale==0) {
+  else if (Seqn>100 && fontscale==0) {
     fontscale = 0.1
   }
 
