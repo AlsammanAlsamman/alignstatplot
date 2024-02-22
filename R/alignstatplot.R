@@ -79,7 +79,7 @@ alignstatplot<-function(SeqFile,AlignMethod="ClustalW",AnnoFile="",OutFolder="ou
 
   if (Verbose==T) print(paste("Plot similarity distance matrix"))
   ## Similarity distance matrix
-  pdf(paste0(OutFolder,"/","Distance_Matrix.pdf"),width = 15 + nrow(SeqInfo)/5,height = 15 + nrow(SeqInfo)/5)
+  pdf(paste0(OutFolder,"/","Distance_Matrix.pdf"),width = 15 ,height = 15)
   distanceHeatmap(DistTable,fontsizescale = fontscale)
   dev.off()
 
