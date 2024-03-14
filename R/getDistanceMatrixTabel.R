@@ -9,10 +9,15 @@
 #' @importFrom seqinr dist.alignment
 getDistanceMatrixTabel<-function(seqInfo,seqAlignment)
 {
-  #Convert Sequence Alignment
-  seqAlignmentConvert<-msaConvert(seqAlignment,type = "seqinr::alignment")
+  # save to temporary file
+  tempFile <- tempfile(fileext = ".fasta")
+  write.dna(seqAlignment, file = tempFile, format = "fasta")
+  # read as alignment
+  seqAlignment <- read.alignment(tempFile, format = "fasta")
+  # remove temporary file
+  unlink(tempFile)
   #Extract Distance Matrix
-  DistMatrix<-dist.alignment(seqAlignmentConvert, matrix = "identity" )
+  DistMatrix<-dist.alignment(seqAlignment, matrix = "identity" )
   DistMatrix<-as.matrix(DistMatrix)
   DistMatrixTable <-as.data.frame(DistMatrix)
   rownames(DistMatrixTable)<-seqInfo$Name   #replace rownames with sequences names

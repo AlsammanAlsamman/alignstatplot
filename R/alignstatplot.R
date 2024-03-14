@@ -23,24 +23,25 @@ alignstatplot<-function(SeqFile,AlignMethod="ClustalW",AnnoFile="",OutFolder="ou
   myClustalWAlignment <- seqAlign(SeqFile,AlignMethod)
   #extract sequence information
   SeqInfo<-getSeqInfo(SeqFile)
-  
   Seqn<-nrow(SeqInfo)
-  
-  # calculate the font size for the sequence alignment plot if 
-  if (Seqn>30 && Seqn<50 && fontscale==0) {
+
+  # if fontscale is 0, it will be calculated based on the number of sequences
+  # calculate the fontscale
+  if (Seqn>1 && Seqn<20 && fontscale==0) {
+    fontscale = 2
+  } else if (Seqn>20 && Seqn<30 && fontscale==0) {
+    fontscale = 1
+  } else if (Seqn>30 && Seqn<50 && fontscale==0) {
     fontscale = 0.5
-  }
-  else if (Seqn>50 && Seqn<100 && fontscale==0) {
+  } else if (Seqn>50 && Seqn<100 && fontscale==0) {
     fontscale = 0.3
-  }
-  else if (Seqn>100 && fontscale==0) {
+  } else if (Seqn>100 && fontscale==0) {
     fontscale = 0.1
   }
 
   #Convert sequence to list
-  SeqAligned<-alignment2Fasta(myClustalWAlignment,SeqInfo)
   if (Verbose==T) print(paste("Save Alignment as Fasta "))
-  alignment2Fasta(myClustalWAlignment,SeqInfo,paste(OutFolder,"Alignment.fasta",sep = "/"))
+  SeqAligned<-alignment2Fasta(myClustalWAlignment,SeqInfo,paste(OutFolder,"Alignment.fasta",sep = "/"))
   if (Verbose==T) print(paste("Save Alignment statistics"))
   StatsTable<-AlignmentStatsPerSeq(SeqInfo,SeqAligned)
   write.table(StatsTable,paste0(OutFolder,"/Alignment_Stats.tsv"),sep="\t")
@@ -64,6 +65,7 @@ alignstatplot<-function(SeqFile,AlignMethod="ClustalW",AnnoFile="",OutFolder="ou
   if (Verbose==T) print(paste("Phylogenetic trees analysis"))
   if (Verbose==T) print(paste("Calculate Distance Table"))
   DistTable<-getDistanceMatrixTabel(SeqInfo,myClustalWAlignment)
+
   if (Verbose==T) print(paste("Save Distance Table"))
   write.table(DistTable,paste0(OutFolder,"/Distance_Table.tsv"),sep="\t")
   if (Verbose==T) print(paste("Calculate Phylogenetic Tree"))
@@ -80,11 +82,11 @@ alignstatplot<-function(SeqFile,AlignMethod="ClustalW",AnnoFile="",OutFolder="ou
   if (Verbose==T) print(paste("Plot similarity distance matrix"))
   ## Similarity distance matrix
   pdf(paste0(OutFolder,"/","Distance_Matrix.pdf"),width = 15 ,height = 15)
-  distanceHeatmap(DistTable,fontsizescale = fontscale)
+  distanceHeatmap(DistTable)
   dev.off()
 
   if (Verbose==T) print(paste("Phylogenetic tree simple plot"))
-  pdf(paste0(OutFolder,"/","Tree.pdf"),width = 7,height = 10)
+  pdf(paste0(OutFolder,"/","Tree.pdf"),width = 5,height = 8)
   plotTreeWithRuler(SeqInfo,myClustalWAlignment)
   dev.off()
 

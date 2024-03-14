@@ -4,7 +4,7 @@
 \alias{distanceHeatmap}
 \title{Plot distance matrix as heatmap}
 \usage{
-distanceHeatmap(DistTable, fontsizescale = 1.5)
+distanceHeatmap(DistTable, fontsizescale = 0)
 }
 \arguments{
 \item{DistTable}{Table of distance matrix generated using \code{\link{getDistanceMatrixTabel}}}

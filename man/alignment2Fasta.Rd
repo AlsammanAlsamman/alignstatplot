@@ -4,10 +4,10 @@
 \alias{alignment2Fasta}
 \title{Write Sequence Alignment to fasta or return it as a list of sequences}
 \usage{
-alignment2Fasta(alignment, SeqInfo, filename = "")
+alignment2Fasta(alignment, SeqInfo, filename = "", format = "blocks")
 }
 \arguments{
-\item{alignment}{sequence alignment object \code{\link[msa]{msa}} \code{\link{seqAlign}}}
+\item{alignment}{sequence alignment object \code{\link[ape]{DNAbin}} \code{\link{seqAlign}}}
 
 \item{SeqInfo}{Information of the sequences \code{\link{getSeqInfo}}}
 

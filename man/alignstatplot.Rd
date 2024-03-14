@@ -12,7 +12,8 @@ alignstatplot(
   MaxMissPer = 0.2,
   MaxCluster = 4,
   MinimumClusterLength = 3,
-  Verbose = T
+  Verbose = T,
+  fontscale = 0
 )
 }
 \arguments{

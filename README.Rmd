@@ -29,32 +29,40 @@ install_github("https://github.com/AlsammanAlsamman/alignstatplot")
 ```{r, warning=FALSE}
 rm(list = ls())
 library(alignstatplot)
-library(ggplot2) #For saving Figures
+# library(seqinr) #For phylogenetic trees
+# library(ape) #For phylogenetic trees
+# library(ggplot2) #For saving Figures
 ```
 ## One function for all analyses
 All the analyses can be performed using one function
 ```{r}
 
-SeqFile<-system.file("extdata","Example_Small.fasta",package = "alignstatplot")
-AnnoFile<-system.file("extdata","Example_Small.anno",package = "alignstatplot")
+ SeqFile<-system.file("extdata","Example_Small.fasta",package = "alignstatplot")
+ # AnnoFile<-system.file("extdata","Example_Small.anno",package = "alignstatplot")
+
+#SeqFile<-"/home/samman/Documents/MyGitHub/alignstatplot_notes/Data/sequence_big.fasta"
+AnnoFile<-""
 
 MaxCluster = 4 #Numbe of SNP clusters   
 MinimumClusterLength = 3 #Length of the SNP cluster to be considered
-AlignMethod<- "ClustalW" #"ClustalW", "ClustalOmega", and "Muscle" 
+AlignMethod<- "ClustalW" #"ClustalW", "ClustalOmega", "Muscle" , and "tcoffee"
 OutFolder<-"output" #Output folder
+OutFolder<-"/home/samman/Documents/MyGitHub/alignstatplot_notes/outFolder" #Output folder
 Verbose<-T  
 MaxMissPer=0.2    #Maximum missing allowed in sequence alignment
 consZoomFactor <- 3 #Zooming factor for circle alignment visualization for the consensus compared to the sequences
 cex.SeqLabels<-0.5 #Sequence labels font sizes
+fontscale<-0
 
- # alignstatplot(SeqFile,
- #               AlignMethod,
- #               AnnoFile,
- #               OutFolder,
- #               MaxMissPer,
- #               MaxCluster,
- #               MinimumClusterLength,
- #               Verbose)
+
+alignstatplot(SeqFile,
+               AlignMethod,
+               AnnoFile,
+               OutFolder,
+               MaxMissPer,
+               MaxCluster,
+               MinimumClusterLength,
+               Verbose)
 
 ```
 

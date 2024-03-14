@@ -29,11 +29,10 @@ Imports: seqinr ,
   gggenes , 
   ggseqlogo,
   BiocManager,
-  msa,
-  ggtree,
   pals
-Remotes: UBod/msa
 Encoding: UTF-8
 LazyLoad: true
 LazyData: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.1
+Remotes: bioc::release/ggtree
+
