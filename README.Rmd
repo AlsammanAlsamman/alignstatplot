@@ -21,7 +21,7 @@ The goal of alignstatplot is to provide a simple tool for performing sequence al
 
 You can install the development version of alignstatplot like so:
 
-``` r
+``` {r}
 library(devtools)
 install_github("https://github.com/AlsammanAlsamman/alignstatplot")
 ```
