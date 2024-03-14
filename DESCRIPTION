@@ -29,8 +29,9 @@ Imports: seqinr ,
   gggenes , 
   ggseqlogo,
   BiocManager,
-  pals
-Remotes: bioc::3.3/ggtree
+  pals,
+  ggtree
+remotes::install_github('YuLab-SMU/ggtree')
 Encoding: UTF-8
 LazyLoad: true
 LazyData: true

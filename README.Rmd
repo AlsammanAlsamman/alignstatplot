@@ -29,6 +29,7 @@ install_github("https://github.com/AlsammanAlsamman/alignstatplot")
 ```{r, warning=FALSE}
 rm(list = ls())
 library(alignstatplot)
+
 # library(seqinr) #For phylogenetic trees
 # library(ape) #For phylogenetic trees
 # library(ggplot2) #For saving Figures
