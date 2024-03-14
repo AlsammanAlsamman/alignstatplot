@@ -5,8 +5,7 @@
 #' "ClustalOmega", and "Muscle" are supported.
 #' @param SeqType "dna"
 #' @param order Ordering sequences in the list random or according to the input
-#' @import ape read.dna
-#' @importFrom ape clustal muscle clustalomega tcoffee
+#' @import ape
 #' @return Returns MsaDNAMultipleAlignment \code{\link[msa]{msa}}
 #' @export
 seqAlign<-function(SeqFile, AlignMethod,SeqType="dna",order = "input")
