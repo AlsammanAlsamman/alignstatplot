@@ -30,9 +30,10 @@ Imports: seqinr ,
   ggseqlogo,
   BiocManager,
   pals
+Remotes: bioc::3.3/ggtree
 Encoding: UTF-8
 LazyLoad: true
 LazyData: true
 RoxygenNote: 7.3.1
-Remotes: bioc::release/ggtree
+
 
