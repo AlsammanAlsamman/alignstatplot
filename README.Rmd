@@ -38,23 +38,18 @@ library(alignstatplot)
 All the analyses can be performed using one function
 ```{r}
 
- SeqFile<-system.file("extdata","Example_Small.fasta",package = "alignstatplot")
- # AnnoFile<-system.file("extdata","Example_Small.anno",package = "alignstatplot")
-
-#SeqFile<-"/home/samman/Documents/MyGitHub/alignstatplot_notes/Data/sequence_big.fasta"
-AnnoFile<-""
+SeqFile<-system.file("extdata","Example_Small.fasta",package = "alignstatplot")
+AnnoFile<-system.file("extdata","Example_Small.anno",package = "alignstatplot")
 
 MaxCluster = 4 #Numbe of SNP clusters   
 MinimumClusterLength = 3 #Length of the SNP cluster to be considered
 AlignMethod<- "ClustalW" #"ClustalW", "ClustalOmega", "Muscle" , and "tcoffee"
 OutFolder<-"output" #Output folder
-OutFolder<-"/home/samman/Documents/MyGitHub/alignstatplot_notes/outFolder" #Output folder
+OutFolder<-"Output folder" #
 Verbose<-T  
 MaxMissPer=0.2    #Maximum missing allowed in sequence alignment
 consZoomFactor <- 3 #Zooming factor for circle alignment visualization for the consensus compared to the sequences
 cex.SeqLabels<-0.5 #Sequence labels font sizes
-fontscale<-0
-
 
 alignstatplot(SeqFile,
                AlignMethod,
@@ -72,6 +67,7 @@ Alignstatplot can be used to plot sequence alignment file. The function can impo
 
 ```{r}
 
+library(alignstatplot)
 AlignFile<-system.file("extdata","Example_Sequences_Aligned.aln",package = "alignstatplot")
 #AlignFile<-system.file("extdata","Example_Sequences_Aligned.fasta",package = "alignstatplot")
 
