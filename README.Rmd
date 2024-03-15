@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
 # alignstatplot
 
 The goal of alignstatplot is to provide a simple tool for performing sequence alignment, descriptive analysis, and innovative visualization of the generated results. alignstatplot provides some new analyses that may aid researchers in identifying genic regions associated with gene variability and can be combined with other analysis tools for studying diversity. In this documentation, we will demonstrate how to use it and how it can be combined with other well-known R packages.
-s
 
 ## Installation
 
