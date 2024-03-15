@@ -9,7 +9,7 @@ plotTreeWithRuler(SeqInfo, myClustalWAlignment)
 \arguments{
 \item{SeqInfo}{table of sequence information generated using \code{\link{getSeqInfo}}}
 
-\item{myClustalWAlignment}{sequence alignment object \code{\link[msa]{msa}}}
+\item{myClustalWAlignment}{sequence alignment object}
 }
 \value{
 Tree plot

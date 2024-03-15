@@ -17,7 +17,7 @@ seqAlign(SeqFile, AlignMethod, SeqType = "dna", order = "input")
 \item{order}{Ordering sequences in the list random or according to the input}
 }
 \value{
-Returns MsaDNAMultipleAlignment \code{\link[msa]{msa}}
+Returns MsaDNAMultipleAlignment
 }
 \description{
 Perfom sequence alignment

@@ -15,7 +15,7 @@ SNPClusterPlotWithTree(
 \arguments{
 \item{SeqInfo}{table of sequence information generated using \code{\link{getSeqInfo}}}
 
-\item{Alignment}{sequence alignment object \code{\link[msa]{msa}} \code{\link{seqAlign}}}
+\item{Alignment}{sequence alignment object}
 
 \item{Cluster}{object of HCPC \code{\link{SNPCluster}}}
 

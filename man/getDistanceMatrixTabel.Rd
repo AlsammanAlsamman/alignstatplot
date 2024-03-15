@@ -9,7 +9,7 @@ getDistanceMatrixTabel(seqInfo, seqAlignment)
 \arguments{
 \item{seqInfo}{Table of sequence information \code{\link{getSeqInfo}}}
 
-\item{seqAlignment}{sequence alignment list generated using \code{\link[msa]{msa}}}
+\item{seqAlignment}{sequence alignment list}
 }
 \value{
 matrix of sequences similarity distances

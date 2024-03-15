@@ -14,7 +14,7 @@ plotSimilarityMatrixWithTree(
 \arguments{
 \item{seqInfo}{table of sequence information generated using \code{\link{getSeqInfo}}}
 
-\item{seqAlignment}{sequence alignment object \code{\link[msa]{msa}}}
+\item{seqAlignment}{sequence alignment object}
 
 \item{plotTree}{logical plot phyolgenetic tree}
 

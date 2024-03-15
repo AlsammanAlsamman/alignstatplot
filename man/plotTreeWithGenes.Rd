@@ -9,7 +9,7 @@ plotTreeWithGenes(SeqInfo, Alignment, AnnoFilePath)
 \arguments{
 \item{SeqInfo}{table of sequence information generated using \code{\link{getSeqInfo}}}
 
-\item{Alignment}{sequence alignment object \code{\link[msa]{msa}} \code{\link{seqAlign}}}
+\item{Alignment}{sequence alignment object}
 
 \item{AnnoFilePath}{Annotation file path}
 }

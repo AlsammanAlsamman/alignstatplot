@@ -9,7 +9,7 @@ plotPCA(seqInfo, seqAlignment, ncluster = 4, labelsize = 10, showlabels = T)
 \arguments{
 \item{seqInfo}{seqInfo table of sequence information generated using \code{\link{getSeqInfo}}}
 
-\item{seqAlignment}{sequence alignment object \code{\link[msa]{msa}}}
+\item{seqAlignment}{sequence alignment object}
 
 \item{ncluster}{number of cluster default 4}
 }
