@@ -31,7 +31,7 @@ Imports: seqinr ,
   BiocManager,
   pals,
   ggtree
-remotes::install_github("YuLab-SMU/ggtree")
+remotes::bioc::release/ggtree
 Encoding: UTF-8
 LazyLoad: true
 LazyData: true
