@@ -6,7 +6,7 @@
 #' @param SeqType "dna"
 #' @param order Ordering sequences in the list random or according to the input
 #' @import ape
-#' @return Returns MsaDNAMultipleAlignment \code{\link[msa]{msa}}
+#' @return Returns MsaDNAMultipleAlignment
 #' @export
 seqAlign<-function(SeqFile, AlignMethod,SeqType="dna",order = "input")
 {

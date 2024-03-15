@@ -46,7 +46,7 @@ AnnotationTable<-function(AnnoFilePath,GeneInfoTable)
 #' Title
 #'
 #' @param SeqInfo table of sequence information generated using \code{\link{getSeqInfo}}
-#' @param Alignment sequence alignment object \code{\link[msa]{msa}} \code{\link{seqAlign}}
+#' @param Alignment sequence alignment object
 #' @param AnnoFilePath Annotation file path
 #' @import ggplot2
 #' @import gggenes

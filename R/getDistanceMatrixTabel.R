@@ -1,11 +1,10 @@
 #' Get distance matrix for sequence alignment
 #'
 #' @param seqInfo Table of sequence information \code{\link{getSeqInfo}}
-#' @param seqAlignment sequence alignment list generated using \code{\link[msa]{msa}}
+#' @param seqAlignment sequence alignment list
 #'
 #' @return matrix of sequences similarity distances
 #' @export
-#' @importFrom msa msaConvert
 #' @importFrom seqinr dist.alignment
 getDistanceMatrixTabel<-function(seqInfo,seqAlignment)
 {

@@ -1,7 +1,7 @@
 #' Plot distance matrix and phylogenetic tree in the same figure as heatmap
 #'
 #' @param seqInfo table of sequence information generated using \code{\link{getSeqInfo}}
-#' @param seqAlignment sequence alignment object \code{\link[msa]{msa}}
+#' @param seqAlignment sequence alignment object
 #' @param plotTree logical plot phyolgenetic tree
 #' @param plotDisMatrix logical plot heatmap of distance matrix
 #' @return Tree and Heatmap plots

@@ -95,7 +95,7 @@ GeneInfoForClusterPlot<-function(SeqInfo)
 #' Plot SNP cluster on genes along with Phylogenetic tree
 #'
 #' @param SeqInfo table of sequence information generated using \code{\link{getSeqInfo}}
-#' @param Alignment sequence alignment object \code{\link[msa]{msa}} \code{\link{seqAlign}}
+#' @param Alignment sequence alignment object
 #' @param MaxCluster Maximum number of clusters to draw default 3
 #' @param MinimumClusterLength Minimum number of base pairs for a cluster to be consider 3bp.
 #' @param Cluster object of HCPC \code{\link{SNPCluster}}

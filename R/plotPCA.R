@@ -1,6 +1,6 @@
 #' Plot PCA for genes / Samples using distance matrix generatd from alignment
 #' @param seqInfo  seqInfo table of sequence information generated using \code{\link{getSeqInfo}}
-#' @param seqAlignment sequence alignment object \code{\link[msa]{msa}}
+#' @param seqAlignment sequence alignment object
 #' @param ncluster number of cluster default 4
 #' @return plot of PCA
 #' @importFrom factoextra fviz_cluster

@@ -1,7 +1,7 @@
 #' Plot phylogenetic tree along with distance ruler
 #'
 #' @param SeqInfo table of sequence information generated using \code{\link{getSeqInfo}}
-#' @param myClustalWAlignment sequence alignment object \code{\link[msa]{msa}}
+#' @param myClustalWAlignment sequence alignment object
 #'
 #' @return Tree plot
 #' @export
