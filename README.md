@@ -188,6 +188,18 @@ drawConsWithGenes(SeqInfo,SeqAligned)
 
 ``` r
 #dev.off()
+
+# geneLabels/consensusLabel let you override the displayed names (the
+# underlying SeqInfo$Name is still used for data linking), and each text
+# element on the plot has its own font-size control: cex.SeqLabels for the
+# gene name labels, cex.ConsLabel for the consensus label (defaults to
+# cex.SeqLabels), and cex.RulerLabels/cex.ConsRulerLabels for the sequence
+# and consensus base-pair ruler tick labels respectively.
+#drawConsWithGenes(SeqInfo,SeqAligned,
+#                   geneLabels = paste0("Gene ", seq_len(nrow(SeqInfo))),
+#                   consensusLabel = "Consensus (all genes)",
+#                   cex.SeqLabels = 0.6, cex.ConsLabel = 0.9,
+#                   cex.RulerLabels = 0.4, cex.ConsRulerLabels = 0.6)
 ```
 
 Plot Sequence alignment with consensus and No links
@@ -202,6 +214,13 @@ drawConsWithNoGenes(SeqInfo,SeqAligned,cex.SeqLabels = 1)
 
 ``` r
 #dev.off()
+
+# geneLabels overrides the displayed sequence names; cex.SeqLabels and
+# cex.bpLabels independently control the sequence-name and base-pair-ruler
+# text sizes.
+#drawConsWithNoGenes(SeqInfo,SeqAligned,
+#                     geneLabels = paste0("Gene ", seq_len(nrow(SeqInfo))),
+#                     cex.SeqLabels = 1, cex.bpLabels = 0.5)
 ```
 
 It can handle tenth of genes and still showing the alignment

@@ -2,6 +2,8 @@
 #'
 #' @param SeqInfo Table of sequence information generated using \code{\link{getSeqInfo}}
 #' @param SeqAligned list of aligned vectors contains aligned sequences using \code{\link{alignment2Fasta}}
+#' @param geneLabels custom display names for the sequences, one per row of \code{SeqInfo}
+#' (default: \code{SeqInfo$Name})
 #' @param cex.SeqLabels A number for sequence labels font size
 #' @param cex.bpLabels A number for base pair labels font size
 #' @param colors sector colors, one per sequence (default: \code{\link{getSeqColors}})
@@ -9,9 +11,13 @@
 #'
 #' @return plot an alignment circle
 #' @export
-drawConsWithNoGenes<-function(SeqInfo,SeqAligned,cex.SeqLabels=0.5,cex.bpLabels=0.3,
+drawConsWithNoGenes<-function(SeqInfo,SeqAligned,geneLabels=NULL,cex.SeqLabels=0.5,cex.bpLabels=0.3,
                               colors=NULL,bgColor="#CCCCCC")
 {
+  if (!is.null(geneLabels) && length(geneLabels) != nrow(SeqInfo)) {
+    stop("geneLabels must have one entry per sequence (", nrow(SeqInfo), "), got ", length(geneLabels), ".")
+  }
+  SeqLabelsToDraw<-if (is.null(geneLabels)) SeqInfo$Name else geneLabels
   #Sequences colors
   ColorsN <- nrow(SeqInfo)
   SectorColors<-if (is.null(colors)) getSeqColors(ColorsN) else colors
@@ -55,7 +61,7 @@ drawConsWithNoGenes<-function(SeqInfo,SeqAligned,cex.SeqLabels=0.5,cex.bpLabels=
                  }
 
                  circos.text(rep(xlim[1], SeqN), 1:SeqN,
-                             paste(SeqInfo$Name),
+                             paste(SeqLabelsToDraw),
                              facing = "downward", adj = c(1.05, 0.5), cex = cex.SeqLabels)
 
                  breaks = seq(0, ConsLength, by = 100)   #we can handle it by removing label

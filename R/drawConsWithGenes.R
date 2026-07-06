@@ -4,7 +4,14 @@
 #' @param SeqAligned list of aligned vectors contains aligned sequences using \code{\link{alignment2Fasta}}
 #' @param consZoomFactor A number between 1-10 for the size of the consensus representation
 #' in relative to the other sequences
-#' @param cex.SeqLabels A number for sequence labels font size
+#' @param geneLabels custom display names for the sequences, one per row of \code{SeqInfo}
+#' (default: \code{SeqInfo$Name}). Only affects the displayed text, not sector identity/ordering.
+#' @param consensusLabel custom display name for the consensus sector (default: \code{"Consensus"})
+#' @param cex.SeqLabels A number for sequence name labels font size
+#' @param cex.ConsLabel A number for the consensus label font size (default: \code{cex.SeqLabels})
+#' @param cex.RulerLabels A number for the base-pair ruler tick label font size of the sequences
+#' @param cex.ConsRulerLabels A number for the base-pair ruler tick label font size of the
+#' consensus sector (default: \code{cex.RulerLabels})
 #' @param colors sector colors, one per sequence (default: \code{\link{getSeqColors}})
 #' @param linkAlpha transparency of the consensus-to-sequence links (0-1)
 #' @return plot of sequence alignment for genes with the consensus sequence
@@ -12,11 +19,19 @@
 #' @import circlize
 drawConsWithGenes<-function(SeqInfo,
                             SeqAligned,consZoomFactor=3,
+                            geneLabels=NULL,
+                            consensusLabel="Consensus",
                             cex.SeqLabels=0.5,
+                            cex.ConsLabel=cex.SeqLabels,
+                            cex.RulerLabels=0.4,
+                            cex.ConsRulerLabels=cex.RulerLabels,
                             colors=NULL,
                             linkAlpha=0.4){
   if (nrow(SeqInfo)>15) {
     warning("The kind of plot will be missy with more sequences than 15 sequences, please use drawConsWithNoGenes instead")
+  }
+  if (!is.null(geneLabels) && length(geneLabels) != nrow(SeqInfo)) {
+    stop("geneLabels must have one entry per sequence (", nrow(SeqInfo), "), got ", length(geneLabels), ".")
   }
   #Sequences colors
   ColorsN <- nrow(SeqInfo)
@@ -33,11 +48,32 @@ drawConsWithGenes<-function(SeqInfo,
   #Draw Genes basic structure
   mycircos.Seq.Sectors = data.frame(sectors = c(SeqInfo$Name,"Consensus"),
                                     x = 1, y = c(SeqInfo$Length,ConsLength))
-  circos.genomicInitialize(mycircos.Seq.Sectors, plotType = "labels",sector.width = as.numeric(sector.width$factor),labels.cex = cex.SeqLabels) #labels fonts
+  #Display labels are drawn ourselves (below) so the consensus label can have
+  #its own font size; circos.genomicInitialize only supports one shared cex.
+  circos.genomicInitialize(mycircos.Seq.Sectors, plotType = character(0),
+                           sector.width = as.numeric(sector.width$factor))
   inv <- "Consensus"
 
+  #Sector name labels (genes + consensus), each with its own display text/size
+  SectorLabels<-c(if (is.null(geneLabels)) SeqInfo$Name else geneLabels, consensusLabel)
+  names(SectorLabels)<-mycircos.Seq.Sectors$sectors
+  #circos.genomicInitialize() itself zeroes cell.padding while it builds its
+  #label track, then restores it; do the same for our own label track, or a
+  #short/large-cex label track can be taller than the default cell padding.
+  opCellPadding<-circos.par("cell.padding")
+  circos.par(cell.padding = c(0, 0, 0, 0))
+  circos.track(ylim = c(0, 1), bg.border = NA,
+              track.height = strheight("chr", cex = max(cex.SeqLabels, cex.ConsLabel)),
+              panel.fun = function(x, y) {
+                sector.index<-CELL_META$sector.index
+                thisCex<-if (sector.index == inv) cex.ConsLabel else cex.SeqLabels
+                circos.text(mean(CELL_META$xlim), 0, labels = SectorLabels[sector.index],
+                           cex = thisCex, adj = c(0.5, 0), niceFacing = TRUE)
+              })
+  circos.par(cell.padding = opCellPadding)
+
   #Draw Genes and Consensus
-  drawGenes(mycircos.Seq.Sectors,inv)
+  drawGenes(mycircos.Seq.Sectors,inv,labelCexScale=cex.RulerLabels,consLabelCexScale=cex.ConsRulerLabels)
 
   # Draw Fragments---------------------------------
 

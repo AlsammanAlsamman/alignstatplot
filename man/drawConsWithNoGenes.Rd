@@ -7,6 +7,7 @@
 drawConsWithNoGenes(
   SeqInfo,
   SeqAligned,
+  geneLabels = NULL,
   cex.SeqLabels = 0.5,
   cex.bpLabels = 0.3,
   colors = NULL,
@@ -17,6 +18,9 @@ drawConsWithNoGenes(
 \item{SeqInfo}{Table of sequence information generated using \code{\link{getSeqInfo}}}
 
 \item{SeqAligned}{list of aligned vectors contains aligned sequences using \code{\link{alignment2Fasta}}}
+
+\item{geneLabels}{custom display names for the sequences, one per row of \code{SeqInfo}
+(default: \code{SeqInfo$Name})}
 
 \item{cex.SeqLabels}{A number for sequence labels font size}
 

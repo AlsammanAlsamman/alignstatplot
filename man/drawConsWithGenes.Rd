@@ -8,7 +8,12 @@ drawConsWithGenes(
   SeqInfo,
   SeqAligned,
   consZoomFactor = 3,
+  geneLabels = NULL,
+  consensusLabel = "Consensus",
   cex.SeqLabels = 0.5,
+  cex.ConsLabel = cex.SeqLabels,
+  cex.RulerLabels = 0.4,
+  cex.ConsRulerLabels = cex.RulerLabels,
   colors = NULL,
   linkAlpha = 0.4
 )
@@ -21,7 +26,19 @@ drawConsWithGenes(
 \item{consZoomFactor}{A number between 1-10 for the size of the consensus representation
 in relative to the other sequences}
 
-\item{cex.SeqLabels}{A number for sequence labels font size}
+\item{geneLabels}{custom display names for the sequences, one per row of \code{SeqInfo}
+(default: \code{SeqInfo$Name}). Only affects the displayed text, not sector identity/ordering.}
+
+\item{consensusLabel}{custom display name for the consensus sector (default: \code{"Consensus"})}
+
+\item{cex.SeqLabels}{A number for sequence name labels font size}
+
+\item{cex.ConsLabel}{A number for the consensus label font size (default: \code{cex.SeqLabels})}
+
+\item{cex.RulerLabels}{A number for the base-pair ruler tick label font size of the sequences}
+
+\item{cex.ConsRulerLabels}{A number for the base-pair ruler tick label font size of the
+consensus sector (default: \code{cex.RulerLabels})}
 
 \item{colors}{sector colors, one per sequence (default: \code{\link{getSeqColors}})}
 

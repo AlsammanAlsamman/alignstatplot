@@ -1,12 +1,15 @@
 #' Drawing sequence basic structure including inverting the consensus direction without links
 #' @param mycircos.Seq.Sectors Table of genes as sectors of the circle plot
 #' @param inv The name of the sequence that will be inverted -- mostly the consensus
-#' @param labelCexScale scale multiplier applied to the axis label font size (relative to \code{par("cex")})
+#' @param labelCexScale scale multiplier applied to the axis label font size of the
+#' non-consensus sequences (relative to \code{par("cex")})
+#' @param consLabelCexScale scale multiplier applied to the axis label font size of the
+#' \code{inv} (consensus) sector (relative to \code{par("cex")}); defaults to \code{labelCexScale}
 #'
 #' @return draws genes and consensus as a part of the drawing alignment function \code{\link{drawConsWithGenes}}
 #' @export
 #' @import circlize
-drawGenes<-function(mycircos.Seq.Sectors,inv,labelCexScale=0.4){
+drawGenes<-function(mycircos.Seq.Sectors,inv,labelCexScale=0.4,consLabelCexScale=labelCexScale){
   # Rules
   circos.track(ylim = c(0, 1), track.margin = convert_height(c(0,0), "mm"),
                bg.border = NA, cell.padding = c(0, 0, 0, 0),
@@ -18,7 +21,7 @@ drawGenes<-function(mycircos.Seq.Sectors,inv,labelCexScale=0.4){
                                       mycircos.Seq.Sectors[which(mycircos.Seq.Sectors$sectors == inv), 3],
                                       by = 200) #number of divission of he rule
                    circos.axis(major.at = rev(major.by), labels = paste0(major.by,"bp"), #, "bp"
-                               labels.cex = labelCexScale * par("cex"))
+                               labels.cex = consLabelCexScale * par("cex"))
                  }else {
                    major.by = seqWithLast(mycircos.Seq.Sectors[which(mycircos.Seq.Sectors$sectors ==
                                                                    CELL_META$sector.index), 2],
