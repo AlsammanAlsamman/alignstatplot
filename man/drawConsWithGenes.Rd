@@ -4,7 +4,14 @@
 \alias{drawConsWithGenes}
 \title{Draw circos plot for sequence alignment for genes with the consensus sequence}
 \usage{
-drawConsWithGenes(SeqInfo, SeqAligned, consZoomFactor = 3, cex.SeqLabels = 0.5)
+drawConsWithGenes(
+  SeqInfo,
+  SeqAligned,
+  consZoomFactor = 3,
+  cex.SeqLabels = 0.5,
+  colors = NULL,
+  linkAlpha = 0.4
+)
 }
 \arguments{
 \item{SeqInfo}{Table of sequence information generated using \code{\link{getSeqInfo}}}
@@ -15,6 +22,10 @@ drawConsWithGenes(SeqInfo, SeqAligned, consZoomFactor = 3, cex.SeqLabels = 0.5)
 in relative to the other sequences}
 
 \item{cex.SeqLabels}{A number for sequence labels font size}
+
+\item{colors}{sector colors, one per sequence (default: \code{\link{getSeqColors}})}
+
+\item{linkAlpha}{transparency of the consensus-to-sequence links (0-1)}
 }
 \value{
 plot of sequence alignment for genes with the consensus sequence

@@ -4,12 +4,14 @@
 \alias{drawGenes}
 \title{Drawing sequence basic structure including inverting the consensus direction without links}
 \usage{
-drawGenes(mycircos.Seq.Sectors, inv)
+drawGenes(mycircos.Seq.Sectors, inv, labelCexScale = 0.4)
 }
 \arguments{
 \item{mycircos.Seq.Sectors}{Table of genes as sectors of the circle plot}
 
 \item{inv}{The name of the sequence that will be inverted -- mostly the consensus}
+
+\item{labelCexScale}{scale multiplier applied to the axis label font size (relative to \code{par("cex")})}
 }
 \value{
 draws genes and consensus as a part of the drawing alignment function \code{\link{drawConsWithGenes}}

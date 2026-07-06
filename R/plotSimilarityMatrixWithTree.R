@@ -4,23 +4,26 @@
 #' @param seqAlignment sequence alignment object
 #' @param plotTree logical plot phyolgenetic tree
 #' @param plotDisMatrix logical plot heatmap of distance matrix
+#' @param colors heatmap color gradient (default: blue-yellow-red, 20 steps)
+#' @param fontsizescale override for the auto-computed tip/label font size; 0 (default)
+#' keeps the automatic size-based heuristic
 #' @return Tree and Heatmap plots
 #' @export
-#' @import RColorBrewer
-#' @importFrom phytools phylo.heatmap
 plotSimilarityMatrixWithTree<-function(seqInfo,seqAlignment,
-                                       plotTree=TRUE,plotDisMatrix=TRUE)
+                                       plotTree=TRUE,plotDisMatrix=TRUE,
+                                       colors=colorRampPalette(colors=c("blue","yellow","red"))(20),
+                                       fontsizescale=0)
 {
 
   DistMatrixTable<-getDistanceMatrixTabel(seqInfo,seqAlignment)
   SeqTree<-getTree(DistMatrixTable)
 
-  #HeatMap color Scale
-  colors<-colorRampPalette(colors=c("blue","yellow","red"))(20)
   #gene font size
   genfsize<-0.8
   seqnum<-nrow(DistMatrixTable)
-  if (seqnum > 100) {
+  if (fontsizescale!=0) {
+    genfsize<-fontsizescale
+  } else if (seqnum > 100) {
     genfsize<- 0.2
     } else if (seqnum > 80 && seqnum < 100) {
       genfsize<- 0.3
@@ -35,8 +38,7 @@ plotSimilarityMatrixWithTree<-function(seqInfo,seqAlignment,
     }
 
 
-
-  figure<-phylo.heatmap(SeqTree,as.matrix(DistMatrixTable),
+  figure<-baseTreeHeatmap(SeqTree,as.matrix(DistMatrixTable),
                         fsize=c(genfsize,genfsize,genfsize),
                         colors=colors,standardize = F)
   figure

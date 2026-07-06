@@ -1,2 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^graphify-out$
+^docs$
+^REFACTOR_PLAN\.md$
+^\.claude$
+^output$
+^Example_Out$

@@ -5,6 +5,9 @@
 #' @return data frame
 #' @export
 nucTableFilter<-function(SeqTable,MaxMissPer=0.2,removeMono=T){
+  if (!is.numeric(MaxMissPer) || length(MaxMissPer) != 1 || MaxMissPer < 0 || MaxMissPer > 1) {
+    stop("MaxMissPer must be a single number between 0 and 1 (a proportion), got: ", MaxMissPer)
+  }
 
   #Frequency Table
   NucFreqTable<-nucFrequency(SeqTable)

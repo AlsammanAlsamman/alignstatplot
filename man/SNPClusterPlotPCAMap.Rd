@@ -4,10 +4,24 @@
 \alias{SNPClusterPlotPCAMap}
 \title{Plot SNP Cluster as a PCA Map}
 \usage{
-SNPClusterPlotPCAMap(Cluster)
+SNPClusterPlotPCAMap(
+  Cluster,
+  main = "SNP Cluster PCA Map",
+  geom = c("point"),
+  pointsize = 1.5,
+  font.label = 12
+)
 }
 \arguments{
 \item{Cluster}{Cluster object of HCPC \code{\link{SNPCluster}}}
+
+\item{main}{plot title}
+
+\item{geom}{character vector, any of \code{"point"}/\code{"text"} - which geoms to draw}
+
+\item{pointsize}{point size (only used when \code{"point"} is in \code{geom})}
+
+\item{font.label}{point-label font size (only used when \code{"text"} is in \code{geom})}
 }
 \value{
 plot

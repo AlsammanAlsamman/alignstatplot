@@ -12,13 +12,20 @@ percentFormat <- function(x, digits = 2, format = "f", ...) {
 
 #' Sequence alignment statistics table per sequence
 #'
-#' @param SeqAligned  list of aligned vectors contains aligned sequences using \code{\link{alignment2Fasta}}
 #' @param SeqInfo table of sequence information generated using \code{\link{getSeqInfo}}
+#' @param SeqAligned  list of aligned vectors contains aligned sequences using \code{\link{alignment2Fasta}}
 #' @return Table
 #' @import stringr
 #' @export
 AlignmentStatsPerSeq<-function(SeqInfo,SeqAligned)
 {
+  if (!is.data.frame(SeqInfo) || !all(c("Name","Length") %in% colnames(SeqInfo))) {
+    stop("SeqInfo must be a data.frame with 'Name' and 'Length' columns, as returned by getSeqInfo().")
+  }
+  if (length(SeqAligned) != nrow(SeqInfo)) {
+    stop("SeqAligned has ", length(SeqAligned), " sequences but SeqInfo has ", nrow(SeqInfo),
+         " rows; they must describe the same set of sequences in the same order.")
+  }
 
   Nlist<-c("A","T","C","G")
   alignmentStats<-data.frame(SeqNo=c(0),

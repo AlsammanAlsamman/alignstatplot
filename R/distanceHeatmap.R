@@ -2,10 +2,11 @@
 #'
 #' @param DistTable Table of distance matrix generated using \code{\link{getDistanceMatrixTabel}}
 #' @param fontsizescale scale of font size
+#' @param colors color palette for the heatmap cells (default: \code{pheatmap}'s own default palette)
 #' @return heatmap plot
 #' @export
 #' @importFrom pheatmap pheatmap
-distanceHeatmap<-function(DistTable,fontsizescale=0)
+distanceHeatmap<-function(DistTable,fontsizescale=0,colors=NULL)
 {
   # if fontsizescale is not set calculate it
   seqn<-nrow(DistTable)
@@ -20,5 +21,9 @@ distanceHeatmap<-function(DistTable,fontsizescale=0)
   } else if (seqn>200 && fontsizescale==0) {
     fontsizescale<-0.1
   }
-  pheatmap(as.matrix(DistTable),fontsize = nrow(DistTable)*fontsizescale)
+  if (is.null(colors)) {
+    pheatmap(as.matrix(DistTable),fontsize = nrow(DistTable)*fontsizescale)
+  } else {
+    pheatmap(as.matrix(DistTable),fontsize = nrow(DistTable)*fontsizescale,color = colors)
+  }
 }

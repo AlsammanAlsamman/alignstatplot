@@ -1,10 +1,12 @@
 #' Plot Sequence Alignment as circle plot
 #' @param path Sequence alignment Fasta path
-#' @param format fasta clustalw
+#' @param SeqFormat fasta clustalw
+#' @param SeqFontSize sequence labels font size
+#' @param colors sector colors, one per sequence (default: \code{\link{getSeqColors}})
 #' @return  plot
 #' @export
 #' @import seqinr
-plotAlignCircle<-function(path,SeqFormat="fasta",SeqFontSize=1)
+plotAlignCircle<-function(path,SeqFormat="fasta",SeqFontSize=1,colors=NULL)
 {
     Seq<-""
     AlignedSeqInfo<-""
@@ -24,9 +26,9 @@ plotAlignCircle<-function(path,SeqFormat="fasta",SeqFontSize=1)
     }
     Seq<-as.vector(Seq)
     if (nrow(AlignedSeqInfo)<=15) {
-      drawConsWithGenes(AlignedSeqInfo,Seq)
+      drawConsWithGenes(AlignedSeqInfo,Seq,colors=colors)
     }else{
-      drawConsWithNoGenes(AlignedSeqInfo,Seq,cex.SeqLabels = SeqFontSize)
+      drawConsWithNoGenes(AlignedSeqInfo,Seq,cex.SeqLabels = SeqFontSize,colors=colors)
     }
 }
 
@@ -46,9 +48,9 @@ AlignedTrueLenght<-function(seq)
 }
 
 #' Split sequence alignment object
-#' @param seq
+#' @param seq a single aligned sequence, as a character string
 #' @import stringr
-#' @return
+#' @return character vector of the sequence split into individual bases
 AlignSplit<-function(seq)
 {
   as.vector(str_split_fixed(as.vector(seq), pattern = "", n = nchar(seq)))

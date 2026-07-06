@@ -4,7 +4,14 @@
 \alias{SNPClusterPlot}
 \title{Plot SNP cluster locations on genes}
 \usage{
-SNPClusterPlot(SeqInfo, SeqAligned, Cluster, MaxCluster, MinimumClusterLength)
+SNPClusterPlot(
+  SeqInfo,
+  SeqAligned,
+  Cluster,
+  MaxCluster,
+  MinimumClusterLength,
+  geneArrowFill = "white"
+)
 }
 \arguments{
 \item{SeqInfo}{table of sequence information generated using \code{\link{getSeqInfo}}}
@@ -16,6 +23,8 @@ SNPClusterPlot(SeqInfo, SeqAligned, Cluster, MaxCluster, MinimumClusterLength)
 \item{MaxCluster}{Maximum number of clusters to draw default 3}
 
 \item{MinimumClusterLength}{Minimum number of base pairs for a cluster to be consider 3bp.}
+
+\item{geneArrowFill}{fill color for the gene arrow bodies}
 }
 \value{
 plot

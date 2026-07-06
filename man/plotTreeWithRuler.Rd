@@ -4,12 +4,27 @@
 \alias{plotTreeWithRuler}
 \title{Plot phylogenetic tree along with distance ruler}
 \usage{
-plotTreeWithRuler(SeqInfo, myClustalWAlignment)
+plotTreeWithRuler(
+  SeqInfo,
+  myClustalWAlignment,
+  edge.width = 1,
+  label.offset = 0,
+  cex = 0.5,
+  axis.cex = 0.5
+)
 }
 \arguments{
 \item{SeqInfo}{table of sequence information generated using \code{\link{getSeqInfo}}}
 
 \item{myClustalWAlignment}{sequence alignment object}
+
+\item{edge.width}{branch line width}
+
+\item{label.offset}{gap between tip and its label}
+
+\item{cex}{tip label font size}
+
+\item{axis.cex}{ruler axis label font size}
 }
 \value{
 Tree plot

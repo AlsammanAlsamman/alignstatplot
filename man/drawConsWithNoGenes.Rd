@@ -8,7 +8,9 @@ drawConsWithNoGenes(
   SeqInfo,
   SeqAligned,
   cex.SeqLabels = 0.5,
-  cex.bpLabels = 0.3
+  cex.bpLabels = 0.3,
+  colors = NULL,
+  bgColor = "#CCCCCC"
 )
 }
 \arguments{
@@ -19,6 +21,10 @@ drawConsWithNoGenes(
 \item{cex.SeqLabels}{A number for sequence labels font size}
 
 \item{cex.bpLabels}{A number for base pair labels font size}
+
+\item{colors}{sector colors, one per sequence (default: \code{\link{getSeqColors}})}
+
+\item{bgColor}{background segment color for the base track}
 }
 \value{
 plot an alignment circle

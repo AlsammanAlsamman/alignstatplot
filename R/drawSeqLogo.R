@@ -6,6 +6,8 @@
 #' @param SplitLen Integer -- number of nucleotides in every plot
 #' @param width Plot height
 #' @param height Plot width
+#' @param titleColor color of the per-chunk position title
+#' @param titleSize font size of the per-chunk position title
 #'
 #' @description Drawing of the aligned sequences in logo format showing the percentage for every nucleotide
 #' @return plot
@@ -13,7 +15,8 @@
 #' @import ggseqlogo
 #' @import ggplot2
 #' @import patchwork
-drawSeqLogo<-function(SeqAligned,SplitLen=50,joinPlot=T,outFolder="",width = 15,height = 30)
+drawSeqLogo<-function(SeqAligned,SplitLen=50,joinPlot=T,outFolder="",width = 15,height = 30,
+                      titleColor="red",titleSize=5)
 {
   if (!joinPlot && outFolder=="") {
     stop("Please specify folder 'outFolder' for the output")
@@ -39,7 +42,7 @@ drawSeqLogo<-function(SeqAligned,SplitLen=50,joinPlot=T,outFolder="",width = 15,
     }
     ggseqlogo(xLogo,method = 'prob')+
       ggtitle(paste0(CurrentLoc,"bp"))+
-      theme(plot.title = element_text(color = "red",size = 5)) + theme_logo()
+      theme(plot.title = element_text(color = titleColor,size = titleSize)) + theme_logo()
   })
 
   if (length(AllPlots)>=15 && joinPlot==T) {

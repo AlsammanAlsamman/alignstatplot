@@ -4,12 +4,16 @@
 \alias{plotAlignCircle}
 \title{Plot Sequence Alignment as circle plot}
 \usage{
-plotAlignCircle(path, SeqFormat = "fasta", SeqFontSize = 1)
+plotAlignCircle(path, SeqFormat = "fasta", SeqFontSize = 1, colors = NULL)
 }
 \arguments{
 \item{path}{Sequence alignment Fasta path}
 
-\item{format}{fasta clustalw}
+\item{SeqFormat}{fasta clustalw}
+
+\item{SeqFontSize}{sequence labels font size}
+
+\item{colors}{sector colors, one per sequence (default: \code{\link{getSeqColors}})}
 }
 \value{
 plot

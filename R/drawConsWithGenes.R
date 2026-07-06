@@ -5,18 +5,22 @@
 #' @param consZoomFactor A number between 1-10 for the size of the consensus representation
 #' in relative to the other sequences
 #' @param cex.SeqLabels A number for sequence labels font size
+#' @param colors sector colors, one per sequence (default: \code{\link{getSeqColors}})
+#' @param linkAlpha transparency of the consensus-to-sequence links (0-1)
 #' @return plot of sequence alignment for genes with the consensus sequence
 #' @export
 #' @import circlize
 drawConsWithGenes<-function(SeqInfo,
                             SeqAligned,consZoomFactor=3,
-                            cex.SeqLabels=0.5){
+                            cex.SeqLabels=0.5,
+                            colors=NULL,
+                            linkAlpha=0.4){
   if (nrow(SeqInfo)>15) {
     warning("The kind of plot will be missy with more sequences than 15 sequences, please use drawConsWithNoGenes instead")
   }
   #Sequences colors
   ColorsN <- nrow(SeqInfo)
-  SectorColors<-getSeqColors(ColorsN)
+  SectorColors<-if (is.null(colors)) getSeqColors(ColorsN) else colors
   #Length of the consensus is the length of any aligned sequence
   ConsLength<-length(SeqAligned[[1]])
   #Calculate consensus width using the zooming factor
@@ -85,7 +89,7 @@ drawConsWithGenes<-function(SeqInfo,
     SeqTarget$start<-SeqH.Links$start
     SeqTarget$end<-SeqH.Links$end
 
-    circos.genomicLink(bedCons,SeqTarget,col = adjustcolor( SectorColors[SeqH], alpha.f = 0.4)
+    circos.genomicLink(bedCons,SeqTarget,col = adjustcolor( SectorColors[SeqH], alpha.f = linkAlpha)
                        , rou1=0.39,rou2 = 0.9)
 
   }

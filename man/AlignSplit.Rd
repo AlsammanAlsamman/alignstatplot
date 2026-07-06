@@ -6,6 +6,12 @@
 \usage{
 AlignSplit(seq)
 }
+\arguments{
+\item{seq}{a single aligned sequence, as a character string}
+}
+\value{
+character vector of the sequence split into individual bases
+}
 \description{
 Split sequence alignment object
 }

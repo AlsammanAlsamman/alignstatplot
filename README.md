@@ -15,6 +15,27 @@ The tool is available online :
 
 https://bioinformatics.um6p.ma/AlignStatPlot/
 
+## What's new in 0.2.0
+
+This is an updated version focused on making the package lighter and easier to install, and
+giving users more control over plot appearance:
+
+* **Fewer, lighter dependencies.** Dropped the Bioconductor dependency (`ggtree`, `BiocManager`)
+  along with `tidyverse`, `plyr`, `reshape2`, `pals`, `factoextra`, and `phytools` — all
+  reimplemented internally on top of packages already required. The package now installs from
+  CRAN alone, no Bioconductor configuration needed.
+* **More control over plots.** Plotting functions (`distanceHeatmap`, `nucTableHeatmap`,
+  `plotTreeWithRuler`, `SNPClusterPlotPCAMap`, and others) now accept `colors`/`palette`,
+  font-size, and theme-style arguments (with the previous look kept as the default), and return
+  their plot object instead of only drawing/saving as a side effect.
+* **Input validation.** Core analysis functions (`getSeqInfo`, `alignment2Table`,
+  `AlignmentStatsPerSeq`, `nucFrequency`, `seqTableToBinary`, `getDistanceMatrixTabel`, `getTree`,
+  `SNPCluster`, and others) now reject malformed input with an informative error at the point of
+  the call, instead of failing deep inside a downstream plotting step.
+* **Regression test suite.** Added a `testthat`-based suite covering the analysis pipeline.
+
+See `REFACTOR_PLAN.md` in the repository for the full, step-by-step account of this work.
+
 ## Installation
 
 You can install the development version of alignstatplot like so:

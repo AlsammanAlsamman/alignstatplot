@@ -4,7 +4,12 @@
 \alias{nucFrequencyPlot}
 \title{Plot the frequency of nucleotides across the sequence}
 \usage{
-nucFrequencyPlot(NucCount, xlabel = TRUE, cex.NucLabels = 7)
+nucFrequencyPlot(
+  NucCount,
+  xlabel = TRUE,
+  cex.NucLabels = 7,
+  colors = defaultNucleotideColors
+)
 }
 \arguments{
 \item{NucCount}{Table of nueleotide frequency across the aligned sequences \code{\link{nucFrequency}}}
@@ -12,6 +17,9 @@ nucFrequencyPlot(NucCount, xlabel = TRUE, cex.NucLabels = 7)
 \item{xlabel}{font size of sequences names}
 
 \item{cex.NucLabels}{font size of nucleotides}
+
+\item{colors}{named color vector for nucleotides A, T, C, G, N (default:
+the package's standard nucleotide palette, shared with \code{\link{nucTableHeatmap}})}
 }
 \value{
 A plot for the frequency of nucleotides

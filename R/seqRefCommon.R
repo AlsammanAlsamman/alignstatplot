@@ -7,6 +7,10 @@
 #' @export
 seqRefCommon<-function(SeqAlignedTable,RefsNames)
 {
+  if (!all(RefsNames %in% rownames(SeqAlignedTable))) {
+    stop("RefsNames contains names not present in rownames(SeqAlignedTable): ",
+         paste(setdiff(RefsNames, rownames(SeqAlignedTable)), collapse = ", "))
+  }
   #Using Multiple References
   #take the first one as reference
   RefGenotype<-SeqAlignedTable[RefsNames[1],]

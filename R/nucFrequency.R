@@ -6,6 +6,9 @@
 #' the missing nucleotide (N)
 #' @export
 nucFrequency<-function(TargetTable){
+  if (is.null(dim(TargetTable)) || nrow(TargetTable) == 0 || ncol(TargetTable) == 0) {
+    stop("TargetTable must be a non-empty matrix/data.frame of aligned sequences (rows) x nucleotide positions (columns), as returned by alignment2Table().")
+  }
   #be aware that
   SeqN<-nrow(TargetTable)
   NucCount<-matrix(nrow = 5, ncol = ncol(TargetTable))

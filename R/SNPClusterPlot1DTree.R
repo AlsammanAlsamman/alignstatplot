@@ -4,8 +4,10 @@
 #' @param LabelsFontSize Labels font size
 #' @return plot
 #' @export
-#' @importFrom factoextra fviz_dend
+#' @import ggplot2
 SNPClusterPlot1DTree<-function(Cluster,ShowLabels=T,LabelsFontSize=0.1)
 {
-  fviz_dend(Cluster, show_labels = T,cex = 0.1)
+  hc<-Cluster$call$t$tree
+  k<-length(unique(Cluster$data.clust$clust))
+  ggClusterDendrogram(hc, k = k, show_labels = ShowLabels, cex = LabelsFontSize)
 }

@@ -4,14 +4,17 @@
 #' @param SeqAligned list of aligned vectors contains aligned sequences using \code{\link{alignment2Fasta}}
 #' @param cex.SeqLabels A number for sequence labels font size
 #' @param cex.bpLabels A number for base pair labels font size
+#' @param colors sector colors, one per sequence (default: \code{\link{getSeqColors}})
+#' @param bgColor background segment color for the base track
 #'
 #' @return plot an alignment circle
 #' @export
-drawConsWithNoGenes<-function(SeqInfo,SeqAligned,cex.SeqLabels=0.5,cex.bpLabels=0.3)
+drawConsWithNoGenes<-function(SeqInfo,SeqAligned,cex.SeqLabels=0.5,cex.bpLabels=0.3,
+                              colors=NULL,bgColor="#CCCCCC")
 {
   #Sequences colors
   ColorsN <- nrow(SeqInfo)
-  SectorColors<-getSeqColors(ColorsN)
+  SectorColors<-if (is.null(colors)) getSeqColors(ColorsN) else colors
 
   #Length of the consensus is the length of any aligned sequence
   ConsLength<-length(SeqAligned[[1]])
@@ -33,7 +36,7 @@ drawConsWithNoGenes<-function(SeqInfo,SeqAligned,cex.SeqLabels=0.5,cex.bpLabels=
 
                  circos.segments(rep(xlim[1], SeqN), 1:SeqN,
                                  rep(xlim[2], SeqN), 1:SeqN,
-                                 col = "#CCCCCC",lwd = 0.1)
+                                 col = bgColor,lwd = 0.1)
 
                  for (SeqH in 1:SeqN) {
                    SeqH.Frags<-as.data.frame(SeqHighLights[[SeqH]])

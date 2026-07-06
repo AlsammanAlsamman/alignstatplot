@@ -12,6 +12,8 @@ alignment2Fasta(alignment, SeqInfo, filename = "", format = "blocks")
 \item{SeqInfo}{Information of the sequences \code{\link{getSeqInfo}}}
 
 \item{filename}{If it was set, the file name sequences will be written in file}
+
+\item{format}{if "blocks" (default), also write the alignment to \code{filename} via \code{\link[ape]{write.dna}}}
 }
 \value{
 A list of vectors of aligned sequences or write it to file
@@ -20,8 +22,12 @@ A list of vectors of aligned sequences or write it to file
 Write Sequence Alignment to fasta or return it as a list of sequences
 }
 \examples{
-seqFile<-system.file("extdata","sequence_few.fasta",package = "alignstatplot")
+\dontrun{
+# requires the ClustalW executable to be installed and on the PATH
+seqFile<-system.file("extdata","Example_Small.fasta",package = "alignstatplot")
+SeqInfo<-getSeqInfo(seqFile)
 myClustalWAlignment <- seqAlign(seqFile,"ClustalW")
 SeqAligned<-alignment2Fasta(myClustalWAlignment,SeqInfo)
 SeqAligned
+}
 }

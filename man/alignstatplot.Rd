@@ -32,6 +32,9 @@ alignstatplot(
 \item{MinimumClusterLength}{(optional) Minimum Nucleotides in one cluster to be reported}
 
 \item{Verbose}{(optional) verbose}
+
+\item{fontscale}{(optional) font size scale for sequence labels; if 0 (default),
+it is chosen automatically based on the number of sequences}
 }
 \value{
 plots

@@ -5,6 +5,20 @@
 #' @return List of sequences , where clustered SNPs are marked by number
 SeqLocateCluster<-function(SeqAligned,ClusterTable)
 {
+  if (!all(c("Nucleotide","Cluster") %in% colnames(ClusterTable))) {
+    stop("ClusterTable must have 'Nucleotide' and 'Cluster' columns, as returned by getClusterTable().")
+  }
+  if (!all(grepl("^N[0-9]+$", ClusterTable$Nucleotide))) {
+    stop("ClusterTable$Nucleotide must follow the 'N<position>' naming convention produced by alignment2Table() (e.g. 'N12'); found values that don't match: ",
+         paste(unique(ClusterTable$Nucleotide[!grepl("^N[0-9]+$", ClusterTable$Nucleotide)]), collapse = ", "))
+  }
+  AlignedLength <- length(SeqAligned[[1]])
+  ClusterPositions <- as.numeric(gsub("N","",ClusterTable$Nucleotide))
+  if (any(ClusterPositions < 1) || any(ClusterPositions > AlignedLength)) {
+    stop("ClusterTable$Nucleotide positions must fall within the aligned sequence length (1..",
+         AlignedLength, "); found out-of-range position(s): ",
+         paste(ClusterPositions[ClusterPositions < 1 | ClusterPositions > AlignedLength], collapse = ", "))
+  }
   #Converting alignment to list
   SeqList<-list()
   for (seq in 1:length(SeqAligned)) {
@@ -40,7 +54,7 @@ SeqLocateCluster<-function(SeqAligned,ClusterTable)
 #' @param MinimumClusterLength Minimum length of clustered nucleotides to consider as a group cluster
 #' @return Table
 #' @importFrom  stringr str_locate_all
-#' @import tidyverse
+#' @importFrom tibble add_row
 getClusterAnnotation<-function(SeqInfo,SeqWithClusters,ClusterMax=3,MinimumClusterLength=3)
 {
   #Table Structure
@@ -99,15 +113,18 @@ GeneInfoForClusterPlot<-function(SeqInfo)
 #' @param MaxCluster Maximum number of clusters to draw default 3
 #' @param MinimumClusterLength Minimum number of base pairs for a cluster to be consider 3bp.
 #' @param Cluster object of HCPC \code{\link{SNPCluster}}
+#' @param geneArrowFill fill color for the gene arrow bodies
+#' @param rel_widths relative widths of the tree panel and gene-structure panel
+#' @param label_size panel label font size, forwarded to \code{cowplot::plot_grid}
 #'
 #' @import ggplot2
 #' @import gggenes
-#' @import ggtree
 #' @import forcats
 #' @import cowplot
 #' @return plot
 #' @export
-SNPClusterPlotWithTree<-function(SeqInfo,Alignment,Cluster,MaxCluster=3,MinimumClusterLength=3)
+SNPClusterPlotWithTree<-function(SeqInfo,Alignment,Cluster,MaxCluster=3,MinimumClusterLength=3,
+                                 geneArrowFill="white",rel_widths=c(1,2),label_size=1)
 {
   DistanceTable<-getDistanceMatrixTabel(SeqInfo,Alignment)
   ClustTable<-getClusterTable(Cluster)
@@ -119,20 +136,16 @@ SNPClusterPlotWithTree<-function(SeqInfo,Alignment,Cluster,MaxCluster=3,MinimumC
   ##### Tree
   options(ignore.negative.edge=TRUE)
   myTree<-getTree(DistanceTable)
-  # SeqTreePlot<-ggplot(myTree, aes(x, y)) + geom_tree() + theme_tree()+
-  #   theme(plot.margin=unit(c(0,0,0,0), "cm"))
-  SeqTreePlot <- ggtree(myTree) + geom_tiplab(align=TRUE,size=3) + hexpand(.4)
+  TreeResult<-ggPhyloTree(myTree, tip_size = 3, align = TRUE, expand = 0.4)
+  SeqTreePlot <- TreeResult$plot
 
   #Tree order
-  TreeTable=fortify(myTree)
-  TipTable = subset(TreeTable, isTip)
-  NodesOrder<-TipTable$label[order(TipTable$y, decreasing=TRUE)]
-
+  NodesOrder<-TreeResult$tip_order
 
   GeneInfoTable<-GeneInfoTable[match(rev(NodesOrder), GeneInfoTable$molecule),]
   ##### Sequences
   SeqClPlot<-GeneInfoTable %>% ggplot(aes(xmin = start, xmax = end, y = molecule))+
-    geom_gene_arrow(fill = "white")+ aes(y = fct_inorder(gene))+
+    geom_gene_arrow(fill = geneArrowFill)+ aes(y = fct_inorder(gene))+
     geom_subgene_arrow(data = SNPClusterAnnotation,
                         aes(xmin = start, xmax = end,
                             y = molecule, fill = gene,
@@ -142,7 +155,6 @@ SNPClusterPlotWithTree<-function(SeqInfo,Alignment,Cluster,MaxCluster=3,MinimumC
     theme(axis.title.y = element_blank()) +
     theme(plot.margin=unit(c(0,0,0,0), "cm"))+
     #### Prepare part
-    theme_tree2() +
     xlab(NULL) + ylab(NULL)+
     theme_minimal()+ theme(
       panel.grid = element_blank(),
@@ -150,7 +162,7 @@ SNPClusterPlotWithTree<-function(SeqInfo,Alignment,Cluster,MaxCluster=3,MinimumC
       axis.text = element_blank(),
       axis.ticks.x = element_blank())
 
-  plot_grid(SeqTreePlot,SeqClPlot, ncol=2,rel_widths = c(1,2),label_size = 1)
+  plot_grid(SeqTreePlot,SeqClPlot, ncol=2,rel_widths = rel_widths,label_size = label_size)
 
 }
 
@@ -161,11 +173,12 @@ SNPClusterPlotWithTree<-function(SeqInfo,Alignment,Cluster,MaxCluster=3,MinimumC
 #' @param Cluster object of HCPC \code{\link{SNPCluster}}
 #' @param MaxCluster Maximum number of clusters to draw default 3
 #' @param MinimumClusterLength Minimum number of base pairs for a cluster to be consider 3bp.
+#' @param geneArrowFill fill color for the gene arrow bodies
 #' @return plot
 #' @export
 #' @import ggplot2
 #' @import gggenes
-SNPClusterPlot<-function(SeqInfo,SeqAligned,Cluster,MaxCluster,MinimumClusterLength)
+SNPClusterPlot<-function(SeqInfo,SeqAligned,Cluster,MaxCluster,MinimumClusterLength,geneArrowFill="white")
 {
 
   ClustTable<-getClusterTable(Cluster)
@@ -174,7 +187,7 @@ SNPClusterPlot<-function(SeqInfo,SeqAligned,Cluster,MaxCluster,MinimumClusterLen
   GeneInfoTable<-GeneInfoForClusterPlot(SeqInfo)
 
   SeqClPlot<- ggplot(GeneInfoTable,aes(xmin = start, xmax = end, y = molecule))+
-    geom_gene_arrow(fill = "white")+ aes(y = fct_inorder(gene))+
+    geom_gene_arrow(fill = geneArrowFill)+ aes(y = fct_inorder(gene))+
     geom_subgene_arrow(data = SNPClusterAnnotation,
                        aes(xmin = start, xmax = end,
                            y = molecule, fill = gene,

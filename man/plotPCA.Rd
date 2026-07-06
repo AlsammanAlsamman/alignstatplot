@@ -12,6 +12,12 @@ plotPCA(seqInfo, seqAlignment, ncluster = 4, labelsize = 10, showlabels = T)
 \item{seqAlignment}{sequence alignment object}
 
 \item{ncluster}{number of cluster default 4}
+
+\item{labelsize}{point label font size (currently unused: the plot has no text-label
+layer, so this parameter has no effect on the rendered output; kept for
+backward compatibility, see REFACTOR_PLAN.md Step 5)}
+
+\item{showlabels}{whether to show point labels (currently unused, see \code{labelsize})}
 }
 \value{
 plot of PCA

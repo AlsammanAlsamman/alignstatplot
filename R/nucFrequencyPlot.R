@@ -3,11 +3,14 @@
 #' @param NucCount Table of nueleotide frequency across the aligned sequences \code{\link{nucFrequency}}
 #' @param xlabel font size of sequences names
 #' @param cex.NucLabels font size of nucleotides
+#' @param colors named color vector for nucleotides A, T, C, G, N (default:
+#' the package's standard nucleotide palette, shared with \code{\link{nucTableHeatmap}})
 #'
 #' @return A plot for the frequency of nucleotides
 #' @export
 #' @import  ggplot2 dplyr tidyr tibble
-nucFrequencyPlot<-function(NucCount, xlabel=TRUE,cex.NucLabels=7){
+#' @importFrom scales percent
+nucFrequencyPlot<-function(NucCount, xlabel=TRUE,cex.NucLabels=7,colors=defaultNucleotideColors){
   NucCount.Table<-NucCount%>%
     rownames_to_column %>%
     gather(col, value, -rowname)
@@ -18,7 +21,7 @@ nucFrequencyPlot<-function(NucCount, xlabel=TRUE,cex.NucLabels=7){
 
   p<-ggplot(data=NucCount.Table, aes(x=Position, y=Frequency, fill=Nucleotide)) +
     geom_bar(stat="identity")+ scale_y_continuous(labels = scales::percent)+
-    scale_fill_manual(values=c("red", "blue", "green","yellow","black"))+
+    scale_fill_manual(values=colors)+
     theme(panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           panel.border = element_blank(),

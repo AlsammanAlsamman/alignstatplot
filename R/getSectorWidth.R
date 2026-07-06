@@ -7,6 +7,15 @@
 #' @return A table for every sector name (sequence) and zooming ratio
 #' @export
 getSectorWidth<-function(SeqInfo,ConsLength,ZoomFactor){
+  if (!is.data.frame(SeqInfo) || !all(c("Name","Length") %in% colnames(SeqInfo))) {
+    stop("SeqInfo must be a data.frame with 'Name' and 'Length' columns, as returned by getSeqInfo().")
+  }
+  if (!is.numeric(ConsLength) || length(ConsLength) != 1 || ConsLength <= 0) {
+    stop("ConsLength must be a single positive number, got: ", ConsLength)
+  }
+  if (!is.numeric(ZoomFactor) || length(ZoomFactor) != 1 || ZoomFactor <= 0) {
+    stop("ZoomFactor must be a single positive number, got: ", ZoomFactor)
+  }
   mat<-matrix(nrow = nrow(SeqInfo), ncol = 2)
   sector.width<-as.data.frame(mat)
   colnames(sector.width)<-c("sector","factor")

@@ -20,8 +20,7 @@ A table of sequence information
 Extract sequence information from a fasta file
 }
 \examples{
-SeqFile<-SeqFile<-system.file("extdata","sequence_few.fasta",package = "alignstatplot")
-fs <- read.fasta(file = SeqFile,forceDNAtolower = TRUE,apply.mask = T)
-SeqInfo<-getSeqInfo(fs)
+SeqFile<-system.file("extdata","Example_Small.fasta",package = "alignstatplot")
+SeqInfo<-getSeqInfo(SeqFile)
 SeqInfo
 }

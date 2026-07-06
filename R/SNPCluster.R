@@ -10,6 +10,12 @@
 #' @importFrom FactoMineR PCA MCA HCPC
 SNPCluster<-function(SeqAlignedTable,ncp=20)
 {
+  if (is.null(dim(SeqAlignedTable)) || nrow(SeqAlignedTable) == 0 || ncol(SeqAlignedTable) == 0) {
+    stop("SeqAlignedTable must be a non-empty matrix/data.frame of aligned sequences (rows) x nucleotide positions (columns), as returned by alignment2Table() or nucTableFilter().")
+  }
+  if (!is.numeric(ncp) || length(ncp) != 1 || ncp < 1) {
+    stop("ncp must be a single positive number, got: ", ncp)
+  }
   CaAnalysis<-""
   SeqAlignedTable[SeqAlignedTable=="-"]<-NA
 

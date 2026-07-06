@@ -5,9 +5,11 @@
 #' @param LowerToUpper logiocal if upper to lower format ios needed
 #' @return sequence file
 #' @export
-#' @importFrom plyr mapvalues
 seqRemoveAmbiguous<-function(fileNameInput,fileNameOut="",LowerToUpper=T)
 {
+  if (!is.character(fileNameInput) || length(fileNameInput) != 1 || !file.exists(fileNameInput)) {
+    stop("fileNameInput must be a path to an existing fasta file; got: ", paste(fileNameInput, collapse = ", "))
+  }
   if (fileNameOut=="") {
     fileNameOut=paste0(tempdir(),"/input.fasta")
   }
@@ -28,9 +30,10 @@ seqRemoveAmbiguous<-function(fileNameInput,fileNameOut="",LowerToUpper=T)
   for (i in 1:length(linn)){
     if (grepl(">",linn[i], fixed = TRUE)) {next}
     if (!grepl(Pattern,linn[i])) {next}
-    strvect<-strsplit(linn[i],"")
-    strvect<-mapvalues(strvect[[1]], from=AmbNuc, to=NiceNuc,warn_missing = F)
-    linn[i]<-paste(as.vector(strvect),collapse = "")
+    strvect<-strsplit(linn[i],"")[[1]]
+    matched<-strvect %in% AmbNuc
+    strvect[matched]<-setNames(NiceNuc, AmbNuc)[strvect[matched]]
+    linn[i]<-paste(as.vector(unname(strvect)),collapse = "")
   }
   #Print to file
   #Check its existence

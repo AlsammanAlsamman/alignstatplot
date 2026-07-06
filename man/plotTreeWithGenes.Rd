@@ -4,7 +4,14 @@
 \alias{plotTreeWithGenes}
 \title{Title}
 \usage{
-plotTreeWithGenes(SeqInfo, Alignment, AnnoFilePath)
+plotTreeWithGenes(
+  SeqInfo,
+  Alignment,
+  AnnoFilePath,
+  geneArrowFill = "white",
+  rel_widths = c(1, 2),
+  label_size = 1
+)
 }
 \arguments{
 \item{SeqInfo}{table of sequence information generated using \code{\link{getSeqInfo}}}
@@ -12,6 +19,12 @@ plotTreeWithGenes(SeqInfo, Alignment, AnnoFilePath)
 \item{Alignment}{sequence alignment object}
 
 \item{AnnoFilePath}{Annotation file path}
+
+\item{geneArrowFill}{fill color for the gene arrow bodies}
+
+\item{rel_widths}{relative widths of the tree panel and gene-structure panel}
+
+\item{label_size}{panel label font size, forwarded to \code{cowplot::plot_grid}}
 }
 \value{
 plot

@@ -4,12 +4,14 @@
 \alias{distanceHeatmap}
 \title{Plot distance matrix as heatmap}
 \usage{
-distanceHeatmap(DistTable, fontsizescale = 0)
+distanceHeatmap(DistTable, fontsizescale = 0, colors = NULL)
 }
 \arguments{
 \item{DistTable}{Table of distance matrix generated using \code{\link{getDistanceMatrixTabel}}}
 
 \item{fontsizescale}{scale of font size}
+
+\item{colors}{color palette for the heatmap cells (default: \code{pheatmap}'s own default palette)}
 }
 \value{
 heatmap plot

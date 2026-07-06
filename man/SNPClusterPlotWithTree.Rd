@@ -9,7 +9,10 @@ SNPClusterPlotWithTree(
   Alignment,
   Cluster,
   MaxCluster = 3,
-  MinimumClusterLength = 3
+  MinimumClusterLength = 3,
+  geneArrowFill = "white",
+  rel_widths = c(1, 2),
+  label_size = 1
 )
 }
 \arguments{
@@ -22,6 +25,12 @@ SNPClusterPlotWithTree(
 \item{MaxCluster}{Maximum number of clusters to draw default 3}
 
 \item{MinimumClusterLength}{Minimum number of base pairs for a cluster to be consider 3bp.}
+
+\item{geneArrowFill}{fill color for the gene arrow bodies}
+
+\item{rel_widths}{relative widths of the tree panel and gene-structure panel}
+
+\item{label_size}{panel label font size, forwarded to \code{cowplot::plot_grid}}
 }
 \value{
 plot

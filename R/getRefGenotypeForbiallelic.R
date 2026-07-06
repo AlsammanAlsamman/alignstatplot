@@ -8,6 +8,12 @@
 #' @export
 getRefGenotypeForbiallelic<-function(NucCount,biallelic)
 {
+  if (is.null(dim(NucCount)) || nrow(NucCount) != 5) {
+    stop("NucCount must have exactly 5 rows (A, C, T, G, N), as returned by nucFrequency().")
+  }
+  if (length(biallelic) == 0 || any(biallelic < 1) || any(biallelic > ncol(NucCount))) {
+    stop("biallelic must be a vector of valid column indices into NucCount, as returned by getBiallelicByFreq().")
+  }
   #get biallelic nucleotides Frequency table
   MajorNucFreq<-NucCount[-5,] #remove N row
   MajorNucFreqBiallelic<-MajorNucFreq[,biallelic]

@@ -4,12 +4,16 @@
 \alias{SNPClusterPlot3DTree}
 \title{plots cluster in 3D tree format}
 \usage{
-SNPClusterPlot3DTree(Cluster, angle = 60)
+SNPClusterPlot3DTree(Cluster, angle = 60, title = NULL, ind.names = TRUE)
 }
 \arguments{
 \item{Cluster}{object of HCPC \code{\link{SNPCluster}}}
 
 \item{angle}{angle of tree}
+
+\item{title}{plot title (default: \code{FactoMineR}'s own default title)}
+
+\item{ind.names}{logical, show individual point labels}
 }
 \value{
 Tree plot

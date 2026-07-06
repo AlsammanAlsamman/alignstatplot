@@ -6,8 +6,10 @@
 #' @param cex.SeqLabels Sequence name font size
 #'
 #' @return list of plots
+#' @param ... additional arguments forwarded to \code{\link{nucTableFreqHeatmap}}
+#' (e.g. \code{colors}, \code{heights}, \code{title})
 #' @export
-nucTableFreqHeatmapSplit<-function(SeqAlignedTable,maxN=100,cex.NucLabels=7,cex.SeqLabels=10)
+nucTableFreqHeatmapSplit<-function(SeqAlignedTable,maxN=100,cex.NucLabels=7,cex.SeqLabels=10,...)
 {
 
   colArray<-1:ncol(SeqAlignedTable)
@@ -15,7 +17,7 @@ nucTableFreqHeatmapSplit<-function(SeqAlignedTable,maxN=100,cex.NucLabels=7,cex.
   colArrayList
   AllPlots<-lapply(colArrayList, function(x) {
     SeqTableChunk<-SeqAlignedTable[,x]
-    nucTableFreqHeatmap(SeqTableChunk)
+    nucTableFreqHeatmap(SeqTableChunk,cex.NucLabels=cex.NucLabels,cex.SeqLabels=cex.SeqLabels,...)
   })
   #return Plot List
   AllPlots

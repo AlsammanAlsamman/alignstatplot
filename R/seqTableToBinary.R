@@ -12,6 +12,15 @@
 #' @export
 seqTableToBinary<-function(SeqAlignedTable,Refs,RemoveNonRefNuc=T,RefsNames=T)
 {
+  if (RefsNames) {
+    if (!all(Refs %in% rownames(SeqAlignedTable))) {
+      stop("Refs contains names not present in rownames(SeqAlignedTable): ",
+           paste(setdiff(Refs, rownames(SeqAlignedTable)), collapse = ", "))
+    }
+  } else if (length(Refs) != ncol(SeqAlignedTable)) {
+    stop("When RefsNames=FALSE, Refs must be a reference genotype vector with one entry per column of SeqAlignedTable (got length ",
+         length(Refs), ", expected ", ncol(SeqAlignedTable), ").")
+  }
 
   RefGenotype<-c()
   if (RefsNames) {

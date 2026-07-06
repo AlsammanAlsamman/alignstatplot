@@ -6,6 +6,9 @@
 #' @export
 getBiallelicByFreq<-function(NucCount)
 {
+  if (is.null(dim(NucCount)) || nrow(NucCount) != 5) {
+    stop("NucCount must have exactly 5 rows (A, C, T, G, N), as returned by nucFrequency().")
+  }
   MajorNucFreq<-NucCount[-5,] #discard N row for missing
   biallelic<-c()
   for (n in 1:ncol(MajorNucFreq)) {

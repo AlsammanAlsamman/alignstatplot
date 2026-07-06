@@ -4,7 +4,12 @@
 \alias{nucTableHeatmap}
 \title{Plot aligned sequence variation as heatmap}
 \usage{
-nucTableHeatmap(SeqAlignedTable, cex.NucLabels = 7, cex.SeqLabels = 10)
+nucTableHeatmap(
+  SeqAlignedTable,
+  cex.NucLabels = 7,
+  cex.SeqLabels = 10,
+  colors = defaultNucleotideColors
+)
 }
 \arguments{
 \item{SeqAlignedTable}{list of aligned vectors contains aligned sequences using \code{\link{alignment2Fasta}}}
@@ -12,6 +17,9 @@ nucTableHeatmap(SeqAlignedTable, cex.NucLabels = 7, cex.SeqLabels = 10)
 \item{cex.NucLabels}{Label font size}
 
 \item{cex.SeqLabels}{Sequence name font size}
+
+\item{colors}{named color vector for nucleotides A, T, C, G, N (default:
+the package's standard nucleotide palette, shared with \code{\link{nucFrequencyPlot}})}
 }
 \value{
 Heatmap plot

@@ -10,7 +10,9 @@ drawSeqLogo(
   joinPlot = T,
   outFolder = "",
   width = 15,
-  height = 30
+  height = 30,
+  titleColor = "red",
+  titleSize = 5
 )
 }
 \arguments{
@@ -25,6 +27,10 @@ drawSeqLogo(
 \item{width}{Plot height}
 
 \item{height}{Plot width}
+
+\item{titleColor}{color of the per-chunk position title}
+
+\item{titleSize}{font size of the per-chunk position title}
 }
 \value{
 plot

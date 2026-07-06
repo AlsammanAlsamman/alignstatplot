@@ -2,9 +2,12 @@
 #' @param seqInfo  seqInfo table of sequence information generated using \code{\link{getSeqInfo}}
 #' @param seqAlignment sequence alignment object
 #' @param ncluster number of cluster default 4
+#' @param labelsize point label font size (currently unused: the plot has no text-label
+#' layer, so this parameter has no effect on the rendered output; kept for
+#' backward compatibility, see REFACTOR_PLAN.md Step 5)
+#' @param showlabels whether to show point labels (currently unused, see \code{labelsize})
 #' @return plot of PCA
-#' @importFrom factoextra fviz_cluster
-#' @importFrom stats kmeans
+#' @importFrom stats kmeans prcomp
 #' @import ggplot2
 #' @export
 plotPCA<-function(seqInfo,seqAlignment,ncluster=4,labelsize = 10 ,showlabels = T)
@@ -15,9 +18,12 @@ plotPCA<-function(seqInfo,seqAlignment,ncluster=4,labelsize = 10 ,showlabels = T
   }
   DistMatrixTable<-getDistanceMatrixTabel(seqInfo,seqAlignment)
   km.res <- kmeans(DistMatrixTable, 4, nstart = 25)
-  p<-fviz_cluster(km.res, data = DistMatrixTable, frame.type = "convex",labelsize = labelsize)
-  # save '$data'
-  data <- p$data # this is all you need
+  # Reimplements factoextra::fviz_cluster's coordinate computation (stand=TRUE
+  # default: standardize then PCA, keep first two components) without factoextra.
+  ScaledData<-scale(DistMatrixTable)
+  pca<-prcomp(ScaledData, scale = FALSE, center = FALSE)
+  data<-data.frame(name = rownames(DistMatrixTable), x = pca$x[, 1], y = pca$x[, 2],
+                   cluster = as.factor(km.res$cluster))
 
   # calculate the convex hull using chull(), for each cluster
   hull_data <-  data %>%

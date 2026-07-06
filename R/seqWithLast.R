@@ -7,6 +7,9 @@
 #' @return vector
 #' @export
 seqWithLast <- function (from, to, by) {
+  if (!is.numeric(by) || length(by) != 1 || by == 0) {
+    stop("by must be a single non-zero number, got: ", by)
+  }
   vec <- do.call(what = seq, args = list(from, to, by))
   if ( tail(vec, 1) != to ) {
     return(c(vec, to))

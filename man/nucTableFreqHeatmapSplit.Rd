@@ -8,7 +8,8 @@ nucTableFreqHeatmapSplit(
   SeqAlignedTable,
   maxN = 100,
   cex.NucLabels = 7,
-  cex.SeqLabels = 10
+  cex.SeqLabels = 10,
+  ...
 )
 }
 \arguments{
@@ -19,6 +20,9 @@ nucTableFreqHeatmapSplit(
 \item{cex.NucLabels}{Label font size}
 
 \item{cex.SeqLabels}{Sequence name font size}
+
+\item{...}{additional arguments forwarded to \code{\link{nucTableFreqHeatmap}}
+(e.g. \code{colors}, \code{heights}, \code{title})}
 }
 \value{
 list of plots

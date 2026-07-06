@@ -8,6 +8,13 @@
 #' @importFrom seqinr dist.alignment
 getDistanceMatrixTabel<-function(seqInfo,seqAlignment)
 {
+  if (!is.data.frame(seqInfo) || !all(c("Name","Length") %in% colnames(seqInfo))) {
+    stop("seqInfo must be a data.frame with 'Name' and 'Length' columns, as returned by getSeqInfo().")
+  }
+  if (length(as.list(seqAlignment)) != nrow(seqInfo)) {
+    stop("seqAlignment has ", length(as.list(seqAlignment)), " sequences but seqInfo has ", nrow(seqInfo),
+         " rows; they must describe the same set of sequences in the same order.")
+  }
   # save to temporary file
   tempFile <- tempfile(fileext = ".fasta")
   write.dna(seqAlignment, file = tempFile, format = "fasta")

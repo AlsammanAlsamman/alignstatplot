@@ -8,9 +8,9 @@
 #' @param MaxCluster (optional) Maximum number of SNP cluster to report
 #' @param MinimumClusterLength (optional) Minimum Nucleotides in one cluster to be reported
 #' @param Verbose (optional) verbose
+#' @param fontscale (optional) font size scale for sequence labels; if 0 (default),
+#' it is chosen automatically based on the number of sequences
 #' @return plots
-#' @import ggtree
-#' @import phytools
 #' @import ggplot2
 #' @export
 

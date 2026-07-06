@@ -48,14 +48,19 @@ AnnotationTable<-function(AnnoFilePath,GeneInfoTable)
 #' @param SeqInfo table of sequence information generated using \code{\link{getSeqInfo}}
 #' @param Alignment sequence alignment object
 #' @param AnnoFilePath Annotation file path
+#' @param geneArrowFill fill color for the gene arrow bodies
+#' @param rel_widths relative widths of the tree panel and gene-structure panel
+#' @param label_size panel label font size, forwarded to \code{cowplot::plot_grid}
 #' @import ggplot2
 #' @import gggenes
-#' @import ggtree
 #' @import forcats
 #' @import cowplot
 #' @return plot
 #' @export
-plotTreeWithGenes<-function(SeqInfo,Alignment,AnnoFilePath)
+plotTreeWithGenes<-function(SeqInfo,Alignment,AnnoFilePath,
+                            geneArrowFill="white",
+                            rel_widths=c(1,2),
+                            label_size=1)
 {
 
   #Phylogenetic Tree
@@ -63,9 +68,8 @@ plotTreeWithGenes<-function(SeqInfo,Alignment,AnnoFilePath)
   options(ignore.negative.edge=TRUE)
   myTree<-getTree(DistanceTable)
   #Tree order
-  TreeTable=fortify(myTree)
-  TipTable = subset(TreeTable, isTip)
-  NodesOrder<-TipTable$label[order(TipTable$y, decreasing=TRUE)]
+  TreeResult<-ggPhyloTree(myTree, tip_size = 3, align = TRUE, expand = 0.4)
+  NodesOrder<-TreeResult$tip_order
   #Gene Information
   GeneInfoTable<-GeneInfoForClusterPlot(SeqInfo)
   GeneInfoTable<-GeneInfoTable[match(rev(NodesOrder), GeneInfoTable$molecule),]
@@ -73,7 +77,7 @@ plotTreeWithGenes<-function(SeqInfo,Alignment,AnnoFilePath)
   GeneAnnotationTable<-AnnotationTable(AnnoFilePath,GeneInfoTable)
   ##### Sequences
   SeqClPlot<-GeneInfoTable %>% ggplot(aes(xmin = start, xmax = end, y = molecule))+
-    geom_gene_arrow(fill = "white")+ aes(y = fct_inorder(gene))+
+    geom_gene_arrow(fill = geneArrowFill)+ aes(y = fct_inorder(gene))+
     geom_subgene_arrow(data = GeneAnnotationTable,
                        aes(xmin = start, xmax = end,
                            y = molecule, fill = subgene,
@@ -83,7 +87,6 @@ plotTreeWithGenes<-function(SeqInfo,Alignment,AnnoFilePath)
     theme(axis.title.y = element_blank()) +
     theme(plot.margin=unit(c(0,0,0,0), "cm"))+
     #### Prepare part
-    theme_tree2() +
     xlab(NULL) + ylab(NULL)+
     theme_minimal()+ theme(
       panel.grid = element_blank(),
@@ -91,10 +94,9 @@ plotTreeWithGenes<-function(SeqInfo,Alignment,AnnoFilePath)
       axis.text = element_blank(),
       axis.ticks.x = element_blank())
 
-  SeqTreePlot <- ggtree(myTree) + geom_tiplab(align=TRUE,size=3) + hexpand(.4)
+  SeqTreePlot <- TreeResult$plot
   #Join Plots
-  SeqTreePlot
-  plot_grid(SeqTreePlot,SeqClPlot, ncol=2,rel_widths = c(1,2),label_size = 1)
+  plot_grid(SeqTreePlot,SeqClPlot, ncol=2,rel_widths = rel_widths,label_size = label_size)
 }
 
 

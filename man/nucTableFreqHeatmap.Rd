@@ -4,7 +4,16 @@
 \alias{nucTableFreqHeatmap}
 \title{Heatmap and frequency plots for sequence alignment}
 \usage{
-nucTableFreqHeatmap(SeqAlignedTable, cex.NucLabels = 7, cex.SeqLabels = 10)
+nucTableFreqHeatmap(
+  SeqAlignedTable,
+  cex.NucLabels = 7,
+  cex.SeqLabels = 10,
+  colors = defaultNucleotideColors,
+  heights = c(0.2, -0.05, 0.8),
+  title = "Nucleotide Frequency",
+  subtitle = "Heatmap of Nucleotide Distribution",
+  title_size = 1.3
+)
 }
 \arguments{
 \item{SeqAlignedTable}{list of aligned vectors contains aligned sequences using \code{\link{alignment2Fasta}}}
@@ -12,6 +21,18 @@ nucTableFreqHeatmap(SeqAlignedTable, cex.NucLabels = 7, cex.SeqLabels = 10)
 \item{cex.NucLabels}{Label font size}
 
 \item{cex.SeqLabels}{Sequence name font size}
+
+\item{colors}{named color vector for nucleotides A, T, C, G, N, passed to
+\code{\link{nucTableHeatmap}} and \code{\link{nucFrequencyPlot}} (default: the
+package's standard nucleotide palette)}
+
+\item{heights}{relative heights of the frequency plot, spacer, and heatmap panels}
+
+\item{title}{top title text}
+
+\item{subtitle}{bottom subtitle text}
+
+\item{title_size}{font scale for \code{title}/\code{subtitle}}
 }
 \value{
 Heatmap and frequency plots

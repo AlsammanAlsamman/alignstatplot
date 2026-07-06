@@ -16,5 +16,5 @@ character
 get sequences colors
 }
 \examples{
-getSectorColors(10)
+getSeqColors(10)
 }

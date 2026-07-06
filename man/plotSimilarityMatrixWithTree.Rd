@@ -8,7 +8,9 @@ plotSimilarityMatrixWithTree(
   seqInfo,
   seqAlignment,
   plotTree = TRUE,
-  plotDisMatrix = TRUE
+  plotDisMatrix = TRUE,
+  colors = colorRampPalette(colors = c("blue", "yellow", "red"))(20),
+  fontsizescale = 0
 )
 }
 \arguments{
@@ -19,6 +21,11 @@ plotSimilarityMatrixWithTree(
 \item{plotTree}{logical plot phyolgenetic tree}
 
 \item{plotDisMatrix}{logical plot heatmap of distance matrix}
+
+\item{colors}{heatmap color gradient (default: blue-yellow-red, 20 steps)}
+
+\item{fontsizescale}{override for the auto-computed tip/label font size; 0 (default)
+keeps the automatic size-based heuristic}
 }
 \value{
 Tree and Heatmap plots

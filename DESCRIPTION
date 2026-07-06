@@ -1,7 +1,7 @@
 Package: alignstatplot
 Type: Package
 Title: Statistical analysis of sequence alignment and creation of fancy plots
-Version: 0.1.0
+Version: 0.2.0
 Author: Alsamman M. Alsamman <smahmoud@ageri.sci.eg>
 Maintainer: Alsamman M. Alsamman <smahmoud@ageri.sci.eg>
 Description: Statistical analysis of sequence alignment and creation of fancy plots
@@ -10,31 +10,28 @@ Description: Statistical analysis of sequence alignment and creation of fancy pl
     and producing new and innovative visualisations to identify variations.
 License: GPL-3
 Imports: seqinr ,
-  FactoMineR , 
-  circlize , 
-  cowplot , 
-  dplyr , 
-  forcats , 
-  ggpubr , 
-  patchwork , 
-  phytools , 
-  tidyr , 
-  tidyverse , 
-  ape , 
-  factoextra , 
-  pheatmap , 
-  plyr , 
-  reshape2 , 
-  seqinr , 
-  gggenes , 
-  ggseqlogo,
-  BiocManager,
-  pals,
-  ggtree
-remotes: bioc::release/ggtree
+  FactoMineR ,
+  circlize ,
+  cowplot ,
+  dplyr ,
+  forcats ,
+  ggpubr ,
+  patchwork ,
+  tidyr ,
+  ape ,
+  pheatmap ,
+  gggenes ,
+  ggseqlogo ,
+  ggplot2 ,
+  grid ,
+  stringr ,
+  tibble ,
+  RColorBrewer ,
+  scales
 Encoding: UTF-8
 LazyLoad: true
 LazyData: true
-RoxygenNote: 7.3.1
-
-
+RoxygenNote: 7.3.3
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
