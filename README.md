@@ -437,8 +437,9 @@ data conversion.
 biallelicNuc<-getBiallelicByFreq(NucCount)
 #Create a reference genotype.
 GenotypeRef<-getRefGenotypeForbiallelic(NucCount,biallelicNuc)
-#Convert data using this genotype as a reference
-SeqBinaryTableByFreqRef<-seqTableToBinary(SeqAlignedTableFiltered,GenotypeRef,RemoveNonRefNuc = T,RefsNames = F)
+#Convert data using this genotype as a reference (restricted to the
+#biallelic columns GenotypeRef actually has a reference allele for)
+SeqBinaryTableByFreqRef<-seqTableToBinary(SeqAlignedTableFiltered[,biallelicNuc],GenotypeRef,RemoveNonRefNuc = T,RefsNames = F)
 
 SeqBinaryTableByFreqRef[1:5,1:5]
 #>       N9 N13 N17 N29 N31

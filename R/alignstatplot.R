@@ -177,8 +177,9 @@ alignstatplot<-function(SeqFile,AlignMethod="ClustalW",AnnoFile="",OutFolder="ou
 
   #Create a reference genotype.
   GenotypeRef<-getRefGenotypeForbiallelic(NucCount,biallelicNuc)
-  #Convert data using this genotype as a reference
-  SeqBinaryTableByFreqRef<-seqTableToBinary(SeqAlignedTableFiltered,GenotypeRef,RemoveNonRefNuc = T,RefsNames = F)
+  #Convert data using this genotype as a reference (restricted to the
+  #biallelic columns GenotypeRef actually has a reference allele for)
+  SeqBinaryTableByFreqRef<-seqTableToBinary(SeqAlignedTableFiltered[,biallelicNuc],GenotypeRef,RemoveNonRefNuc = T,RefsNames = F)
 
   if (Verbose==T) print(paste("SNP Clustering"))
   #Nucleotide variation clustering is a PCA-based analysis that clusters SNP data across genes. It aids in identifying the variation that occurs across genes, where some alleles tend to appear together.

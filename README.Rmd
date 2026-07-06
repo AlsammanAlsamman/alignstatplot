@@ -333,8 +333,9 @@ The fisrt step will be to remove non-biallailic variations (tri-, tetra-, ..) an
 biallelicNuc<-getBiallelicByFreq(NucCount)
 #Create a reference genotype.
 GenotypeRef<-getRefGenotypeForbiallelic(NucCount,biallelicNuc)
-#Convert data using this genotype as a reference
-SeqBinaryTableByFreqRef<-seqTableToBinary(SeqAlignedTableFiltered,GenotypeRef,RemoveNonRefNuc = T,RefsNames = F)
+#Convert data using this genotype as a reference (restricted to the
+#biallelic columns GenotypeRef actually has a reference allele for)
+SeqBinaryTableByFreqRef<-seqTableToBinary(SeqAlignedTableFiltered[,biallelicNuc],GenotypeRef,RemoveNonRefNuc = T,RefsNames = F)
 
 SeqBinaryTableByFreqRef[1:5,1:5]
 ```

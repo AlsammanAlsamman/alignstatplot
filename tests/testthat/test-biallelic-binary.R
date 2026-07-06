@@ -65,6 +65,36 @@ test_that("seqTableToBinary drops positions where the reference itself is a gap"
   expect_equal(colnames(bin), c("N1","N3","N4"))
 })
 
+test_that("the non-reference binary-conversion pipeline handles tables with non-biallelic columns", {
+  # Regression test for a real bug found via a fresh-install smoke test:
+  # nucTableFilter() keeps tri-/tetra-allelic columns (it only drops
+  # monomorphic ones), but getRefGenotypeForbiallelic() only returns a
+  # reference allele for the biallelic subset. Calling seqTableToBinary()
+  # on the *unfiltered-for-biallelic* table with that shorter reference used
+  # to silently produce NA-corrupted output (out-of-bounds vector indexing);
+  # it now errors instead (see the "rejects mismatched Refs input" test
+  # below), and the correct pipeline subsets to the biallelic columns first.
+  m <- make_mixed_allele_table()
+  filt <- nucTableFilter(m, MaxMissPer = 0.2, removeMono = TRUE)
+  expect_equal(ncol(filt), 22) # tri-allelic columns are kept by the filter
+
+  nf <- nucFrequency(filt)
+  bi <- getBiallelicByFreq(nf)
+  expect_equal(bi, 1:20) # the 2 tri-allelic columns are correctly excluded
+
+  ref <- getRefGenotypeForbiallelic(nf, bi)
+  expect_length(ref, 20)
+
+  # calling on the full (unsubset) filtered table is the bug: length mismatch
+  expect_error(seqTableToBinary(filt, ref, RemoveNonRefNuc = TRUE, RefsNames = FALSE),
+               "one entry per column")
+
+  # calling on the table restricted to the biallelic columns is correct
+  bin <- seqTableToBinary(filt[, bi], ref, RemoveNonRefNuc = TRUE, RefsNames = FALSE)
+  expect_equal(dim(bin), c(6, 20))
+  expect_true(all(unlist(bin) %in% c("0","1")))
+})
+
 test_that("seqTableToBinary rejects mismatched Refs input", {
   m <- matrix("A", 2, 3, dimnames = list(c("r1","r2"), c("N1","N2","N3")))
   expect_error(seqTableToBinary(m, "nope", RefsNames = TRUE), "not present in rownames")

@@ -35,6 +35,20 @@ make_biallelic_table <- function() {
   m
 }
 
+make_mixed_allele_table <- function() {
+  # 6 sequences x 22 positions: N1..N20 biallelic A/G (as in
+  # make_biallelic_table()), N21/N22 triallelic (3 distinct alleles, so
+  # nucTableFilter's removeMono keeps them, but getBiallelicByFreq correctly
+  # excludes them). Reproduces the shape mismatch that alignstatplot()'s
+  # binary-conversion step must guard against: GenotypeRef only covers the
+  # biallelic subset, not every column nucTableFilter kept.
+  bi <- make_biallelic_table()[, 1:20]
+  tri <- matrix(rep(c("A","C","G","A","C","G"), 2), nrow = 6)
+  m <- cbind(bi, tri)
+  colnames(m) <- paste0("N", 1:ncol(m))
+  m
+}
+
 bundled_seq_info <- function() {
   fasta <- system.file("extdata", "Example_Sequences_Aligned.fasta", package = "alignstatplot")
   getSeqInfo(fasta)
