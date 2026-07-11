@@ -4,14 +4,16 @@
 \alias{SNPClusterPlot1DTree}
 \title{Plot SNP Cluster as a one dimension tree}
 \usage{
-SNPClusterPlot1DTree(Cluster, ShowLabels = T, LabelsFontSize = 0.1)
+SNPClusterPlot1DTree(Cluster, ShowLabels = T, LabelsFontSize = 0)
 }
 \arguments{
 \item{Cluster}{object of HCPC \code{\link{SNPCluster}}}
 
 \item{ShowLabels}{True Show SNP labels}
 
-\item{LabelsFontSize}{Labels font size}
+\item{LabelsFontSize}{Labels font size; 0 (default) picks a size automatically based on
+the number of leaves (a flat small size that looks fine for a handful of SNPs becomes
+illegible for the hundreds of SNPs a real alignment can produce)}
 }
 \value{
 plot

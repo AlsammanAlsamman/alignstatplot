@@ -64,7 +64,10 @@ drawConsWithNoGenes<-function(SeqInfo,SeqAligned,geneLabels=NULL,cex.SeqLabels=0
                              paste(SeqLabelsToDraw),
                              facing = "downward", adj = c(1.05, 0.5), cex = cex.SeqLabels)
 
-                 breaks = seq(0, ConsLength, by = 100)   #we can handle it by removing label
+                 #A fixed 100bp step works for a ~1000bp example sequence but produces
+                 #hundreds of overlapping, unreadable ticks on a real tens-of-kb genome;
+                 #target ~8 ticks regardless of the actual sequence length instead.
+                 breaks = seqWithLast(0, ConsLength, by = tickStep(0, ConsLength))
                  circos.axis(h = "top", major.at = breaks, labels = paste0(breaks, "bp"),
                              labels.cex = cex.bpLabels)
                })
