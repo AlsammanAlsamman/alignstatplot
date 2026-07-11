@@ -44,7 +44,28 @@ baseTreeHeatmap<-function(tree, X, fsize = c(1, 1, 1), colors = NULL, standardiz
   if (is.null(colors)) colors<-grDevices::heat.colors(20)[20:1]
 
   n_row<-nrow(X); n_col<-ncol(X)
-  widths<-if (legend) c(2, 2, 0.4) else c(1, 1)
+
+  #Size the tree panel to what it actually needs (longest tip label + a fixed
+  #branch/margin allowance) instead of a fixed 50/50 split, so there's no
+  #left-over gap between the tree and the heatmap for small/short-labelled
+  #trees, and no cramped tree for long labels/many tips -- independent of how
+  #many samples or what tree topology is passed in. Clamped to a sane
+  #min/max share of the device width so neither panel can collapse.
+  devWidthIn<-graphics::par("din")[1]
+  labelWidthIn<-max(graphics::strwidth(tree$tip.label, units = "inches", cex = fsize[1]))
+  branchAreaIn<-1.2
+  legendWidthIn<-if (legend) max(0.7, devWidthIn * 0.08) else 0
+  minHeatmapWidthIn<-devWidthIn * 0.3
+  #ape::plot.phylo() needs noticeably more room than strwidth() alone reports
+  #once actually drawn inside a layout() panel (vs. a full-width standalone
+  #plot) -- empirically ~30% more -- so labels don't get clipped for longer
+  #tip names / more tips; verified against 3-tip and 15-long-label stress cases.
+  treeWidthIn<-(labelWidthIn + branchAreaIn) * 1.3
+  treeWidthIn<-min(treeWidthIn, devWidthIn - minHeatmapWidthIn - legendWidthIn)
+  treeWidthIn<-max(treeWidthIn, devWidthIn * 0.15)
+  heatmapWidthIn<-devWidthIn - treeWidthIn - legendWidthIn
+
+  widths<-if (legend) c(treeWidthIn, heatmapWidthIn, legendWidthIn) else c(treeWidthIn, heatmapWidthIn)
   layout_mat<-if (legend) matrix(c(1, 2, 3), nrow = 1) else matrix(c(1, 2), nrow = 1)
   graphics::layout(layout_mat, widths = widths)
 
