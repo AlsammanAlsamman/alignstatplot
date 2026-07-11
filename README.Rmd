@@ -404,7 +404,72 @@ SNPClusterPlotWithTree(SeqInfo,myClustalWAlignment,Cluster,MaxCluster = 3, Minim
 
 ```
 
+# Genomic & statistical analysis
 
+Beyond the alignment and clustering tools above, alignstatplot provides classic
+population-genetics summary statistics and a set of publication-style plots that all
+share one consistent theme (`theme_alignstatplot()`).
+
+## Population-genetics summary statistics
+
+Segregating sites, nucleotide diversity (\eqn{\pi}), Watterson's \eqn{\theta}, and the
+transition/transversion ratio, computed directly from the aligned sequence table.
+
+```{r}
+nucDiversityStats(SeqAlignedTableFiltered)
+```
+
+## Per-position conservation and variant density
+
+`positionConservation()` reports the majority allele, conservation, entropy, and
+missingness at every alignment position; `plotConservationTrack()` and
+`plotVariantDensity()` plot it as a track along the alignment.
+
+```{r}
+PositionStats<-positionConservation(SeqAlignedTableFiltered)
+plotConservationTrack(PositionStats)
+```
+
+```{r}
+plotVariantDensity(SeqAlignedTableFiltered, windowSize = 50)
+```
+
+## Distribution of pairwise sequence identity
+
+A distributional complement to the `distanceHeatmap()` above.
+
+```{r}
+plotIdentityDistribution(DistTable)
+```
+
+## Per-sequence statistics and overall base composition
+
+```{r}
+plotSeqStatsSummary(StatsTable)
+```
+
+```{r}
+plotBaseComposition(NucCount)
+```
+
+## Statistics by annotated region
+
+`regionStats()` aggregates `positionConservation()`'s output within each annotated
+region (e.g. exon/intron), so conservation and variant rate can be compared across
+region types directly.
+
+```{r}
+RegionStats<-regionStats(PositionStats, AnnoFile)
+plotRegionStats(RegionStats)
+```
+
+## Composite summary figure
+
+A single `patchwork`-combined figure suitable as a supplementary summary figure.
+
+```{r}
+plotSummaryDashboard(SeqInfo, SeqAligned, DistTable)
+```
 
 ```{r}
 

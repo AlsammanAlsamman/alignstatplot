@@ -6,3 +6,4 @@
 ^\.claude$
 ^output$
 ^Example_Out$
+^Luigi_data$

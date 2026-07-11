@@ -544,6 +544,91 @@ SNPClusterPlotWithTree(SeqInfo,myClustalWAlignment,Cluster,MaxCluster = 3, Minim
 
 <img src="man/figures/README-unnamed-chunk-28-1.png" width="100%" />
 
+# Genomic & statistical analysis
+
+Beyond the alignment and clustering tools above, alignstatplot provides classic
+population-genetics summary statistics and a set of publication-style plots that all
+share one consistent theme (`theme_alignstatplot()`).
+
+## Population-genetics summary statistics
+
+Segregating sites, nucleotide diversity (π), Watterson's θ, and the
+transition/transversion ratio, computed directly from the aligned sequence table.
+
+``` r
+nucDiversityStats(SeqAlignedTableFiltered)
+#>   NumSequences AlignmentLength SegregatingSites NucleotideDiversity
+#> 1           10             931              931           0.7305645
+#>   WattersonsTheta TsTvRatio
+#> 1       0.3534858 0.8181818
+```
+
+## Per-position conservation and variant density
+
+`positionConservation()` reports the majority allele, conservation, entropy, and
+missingness at every alignment position; `plotConservationTrack()` and
+`plotVariantDensity()` plot it as a track along the alignment.
+
+``` r
+PositionStats<-positionConservation(SeqAlignedTableFiltered)
+plotConservationTrack(PositionStats)
+```
+
+<img src="man/figures/README-conservation-track-1.png" width="100%" />
+
+``` r
+plotVariantDensity(SeqAlignedTableFiltered, windowSize = 50)
+```
+
+<img src="man/figures/README-variant-density-1.png" width="100%" />
+
+## Distribution of pairwise sequence identity
+
+A distributional complement to the `distanceHeatmap()` above.
+
+``` r
+plotIdentityDistribution(DistTable)
+```
+
+<img src="man/figures/README-identity-distribution-1.png" width="100%" />
+
+## Per-sequence statistics and overall base composition
+
+``` r
+plotSeqStatsSummary(StatsTable)
+```
+
+<img src="man/figures/README-seqstats-summary-1.png" width="100%" />
+
+``` r
+plotBaseComposition(NucCount)
+```
+
+<img src="man/figures/README-base-composition-1.png" width="100%" />
+
+## Statistics by annotated region
+
+`regionStats()` aggregates `positionConservation()`'s output within each annotated
+region (e.g. exon/intron), so conservation and variant rate can be compared across
+region types directly.
+
+``` r
+RegionStats<-regionStats(PositionStats, AnnoFile)
+plotRegionStats(RegionStats)
+```
+
+<img src="man/figures/README-region-stats-1.png" width="100%" />
+
+## Composite summary figure
+
+A single `patchwork`-combined figure suitable as a supplementary summary figure.
+
+``` r
+plotSummaryDashboard(SeqInfo, SeqAligned, DistTable)
+```
+
+<img src="man/figures/README-summary-dashboard-1.png" width="100%" />
+
 ``` r
 
 
