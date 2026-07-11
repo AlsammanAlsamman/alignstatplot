@@ -3,7 +3,11 @@
 #' @param alignment sequence alignment object \code{\link[ape]{DNAbin}} \code{\link{seqAlign}}
 #' @param SeqInfo Information of the sequences \code{\link{getSeqInfo}}
 #' @param filename If it was set, the file name sequences will be written in file
-#' @param format if "blocks" (default), also write the alignment to \code{filename} via \code{\link[ape]{write.dna}}
+#' @param format unused (kept for backward compatibility). Previously "blocks" re-wrote
+#' \code{filename} via \code{\link[ape]{write.dna}} immediately after it was written as a plain
+#' FASTA, which silently overwrote it with \pkg{ape}'s space/block-formatted output -- a format
+#' that \code{seqinr::read.fasta()} (used by \code{\link{getSeqInfo}}/\code{\link{readSeq}}) does
+#' not parse correctly, corrupting any downstream analysis that re-reads the saved file.
 #' @return A list of vectors of aligned sequences or write it to file
 #' @export
 #' @examples
@@ -34,10 +38,6 @@ alignment2Fasta <- function(alignment,SeqInfo,filename="",format="blocks") {
       write(paste0(">",SeqInfo[seq,]$Name),filename,append = TRUE)
       write(gsub("(.{60})", "\\1\n", SeqAlignList[[seq]]),filename,append = TRUE)
     }
-  }
-  # save as aln file
-  if (format=="blocks") {
-    write.dna(alignment, file = filename, format = "fasta")
   }
   # split the sequences
   SeqAlignListSplit<-lapply(SeqAlignList,function(x) unlist(strsplit(x,"")))

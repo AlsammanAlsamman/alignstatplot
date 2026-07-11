@@ -1,0 +1,24 @@
+bibentry(
+  bibtype  = "Article",
+  title    = "AlignStatPlot: An R package and online tool for robust sequence alignment statistics and innovative visualization of big data",
+  author   = c(
+    person(given = "A.M.", family = "Alsamman"),
+    person(given = "A.", family = "El Allali"),
+    person(given = "M.M.", family = "Mokhtar"),
+    person(given = "K.", family = "Al-Sham'aa"),
+    person(given = "A.E.", family = "Nassar"),
+    person(given = "K.H.", family = "Mousa"),
+    person(given = "Z.", family = "Kehel")
+  ),
+  journal  = "PLOS ONE",
+  year     = "2023",
+  volume   = "18",
+  number   = "9",
+  pages    = "e0291204",
+  doi      = "10.1371/journal.pone.0291204",
+  textVersion = paste(
+    "Alsamman, A.M., El Allali, A., Mokhtar, M.M., Al-Sham'aa, K., Nassar, A.E., Mousa, K.H. and Kehel, Z., 2023.",
+    "AlignStatPlot: An R package and online tool for robust sequence alignment statistics and innovative",
+    "visualization of big data. PLoS ONE, 18(9), p.e0291204. https://doi.org/10.1371/journal.pone.0291204"
+  )
+)

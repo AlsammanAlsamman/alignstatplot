@@ -13,7 +13,11 @@ alignment2Fasta(alignment, SeqInfo, filename = "", format = "blocks")
 
 \item{filename}{If it was set, the file name sequences will be written in file}
 
-\item{format}{if "blocks" (default), also write the alignment to \code{filename} via \code{\link[ape]{write.dna}}}
+\item{format}{unused (kept for backward compatibility). Previously "blocks" re-wrote
+\code{filename} via \code{\link[ape]{write.dna}} immediately after it was written as a plain
+FASTA, which silently overwrote it with \pkg{ape}'s space/block-formatted output -- a format
+that \code{seqinr::read.fasta()} (used by \code{\link{getSeqInfo}}/\code{\link{readSeq}}) does
+not parse correctly, corrupting any downstream analysis that re-reads the saved file.}
 }
 \value{
 A list of vectors of aligned sequences or write it to file

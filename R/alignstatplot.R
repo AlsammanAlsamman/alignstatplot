@@ -72,7 +72,7 @@ alignstatplot<-function(SeqFile,AlignMethod="ClustalW",AnnoFile="",OutFolder="ou
   myTree<-getTree(DistTable)
 
   if (Verbose==T) print(paste("Save Phylogenetic Tree as Text"))
-  writeNexus(myTree,paste0(OutFolder,"/Tree.nexus"))
+  write.nexus(myTree,file=paste0(OutFolder,"/Tree.nexus"))
 
   if (Verbose==T) print(paste("Save Tree Summary"))
   sink(file=paste0(OutFolder,"/TreeSummary.txt"))

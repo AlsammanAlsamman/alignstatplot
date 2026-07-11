@@ -44,11 +44,10 @@ alignmentNoGapsLinks<-function(SeqAligned,SeqHighLights){
 #' @param seqMarked character vector of aligned sequence
 #'
 #' @return list of vectors of regions locations
+#' @useDynLib alignstatplot, .registration = TRUE
 getSeqRegionCI <- function(seqMarked)
 {
-
-   dyn.load(paste0(.libPaths()[1],"/alignstatplot","/libs","/alignstatplot.so"))
-  .Call("getSeqRegion",as.character(seqMarked),PACKAGE = "alignstatplot")
+  .Call("C_getSeqRegion",as.character(seqMarked),PACKAGE = "alignstatplot")
 }
 
 #' Get regions of sequences in sequence aligned with marks

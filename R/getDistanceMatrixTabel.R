@@ -16,8 +16,13 @@ getDistanceMatrixTabel<-function(seqInfo,seqAlignment)
          " rows; they must describe the same set of sequences in the same order.")
   }
   # save to temporary file
+  # colsep="" avoids ape::write.dna()'s default block-formatted FASTA (a
+  # space every 10 bases), which seqinr::read.alignment() below does not
+  # strip -- silently inflating every sequence with spurious "space" residues
+  # and corrupting the resulting identity distances (found via a real user's
+  # bug report of implausible statistics/heatmaps despite near-identical input).
   tempFile <- tempfile(fileext = ".fasta")
-  write.dna(seqAlignment, file = tempFile, format = "fasta")
+  write.dna(seqAlignment, file = tempFile, format = "fasta", colsep = "")
   # read as alignment
   seqAlignment <- read.alignment(tempFile, format = "fasta")
   # remove temporary file
