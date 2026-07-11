@@ -8,6 +8,8 @@
 #' @param height Plot width
 #' @param titleColor color of the per-chunk position title
 #' @param titleSize font size of the per-chunk position title
+#' @param format file format/extension for saved plots when \code{joinPlot=FALSE}
+#' (passed to \code{\link{saveSeqPlotList}}, e.g. "pdf", "png")
 #'
 #' @description Drawing of the aligned sequences in logo format showing the percentage for every nucleotide
 #' @return plot
@@ -16,7 +18,7 @@
 #' @import ggplot2
 #' @import patchwork
 drawSeqLogo<-function(SeqAligned,SplitLen=50,joinPlot=T,outFolder="",width = 15,height = 30,
-                      titleColor="red",titleSize=5)
+                      titleColor="red",titleSize=5,format="pdf")
 {
   if (!joinPlot && outFolder=="") {
     stop("Please specify folder 'outFolder' for the output")
@@ -55,8 +57,8 @@ drawSeqLogo<-function(SeqAligned,SplitLen=50,joinPlot=T,outFolder="",width = 15,
                   heights =   c(rep(6,length(AllPlots))))
     if (outFolder!="") {
       ggplot2::ggsave(paste0(outFolder,
-                      "Nuc_Frequency_With_Logo.pdf"),
-                      plot = p, device = "pdf",
+                      "Nuc_Frequency_With_Logo.",format),
+                      plot = p, device = format,
                       width = width,height = height)
     }
     else{
@@ -66,7 +68,7 @@ drawSeqLogo<-function(SeqAligned,SplitLen=50,joinPlot=T,outFolder="",width = 15,
   }
   else{
     names(AllPlots)<-1:length(AllPlots)
-    saveSeqPlotList(AllPlots,outFolder,height = height,width = width)
+    saveSeqPlotList(AllPlots,outFolder,height = height,width = width,format = format)
     print(paste0("Plots were saved to ",outFolder))
   }
 }

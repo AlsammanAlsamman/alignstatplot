@@ -12,7 +12,8 @@ drawSeqLogo(
   width = 15,
   height = 30,
   titleColor = "red",
-  titleSize = 5
+  titleSize = 5,
+  format = "pdf"
 )
 }
 \arguments{
@@ -31,6 +32,9 @@ drawSeqLogo(
 \item{titleColor}{color of the per-chunk position title}
 
 \item{titleSize}{font size of the per-chunk position title}
+
+\item{format}{file format/extension for saved plots when \code{joinPlot=FALSE}
+(passed to \code{\link{saveSeqPlotList}}, e.g. "pdf", "png")}
 }
 \value{
 plot

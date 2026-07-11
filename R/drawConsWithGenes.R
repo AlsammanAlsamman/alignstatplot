@@ -9,9 +9,11 @@
 #' @param consensusLabel custom display name for the consensus sector (default: \code{"Consensus"})
 #' @param cex.SeqLabels A number for sequence name labels font size
 #' @param cex.ConsLabel A number for the consensus label font size (default: \code{cex.SeqLabels})
-#' @param cex.RulerLabels A number for the base-pair ruler tick label font size of the sequences
+#' @param cex.RulerLabels A number for the base-pair ruler tick label font size of the
+#' sequences (each sequence only occupies a fraction of the circle, so this needs to stay
+#' smaller than \code{cex.ConsRulerLabels} to avoid overlap)
 #' @param cex.ConsRulerLabels A number for the base-pair ruler tick label font size of the
-#' consensus sector (default: \code{cex.RulerLabels})
+#' consensus sector, which spans the whole circle and so has much more room per tick
 #' @param colors sector colors, one per sequence (default: \code{\link{getSeqColors}})
 #' @param linkAlpha transparency of the consensus-to-sequence links (0-1)
 #' @return plot of sequence alignment for genes with the consensus sequence
@@ -23,8 +25,8 @@ drawConsWithGenes<-function(SeqInfo,
                             consensusLabel="Consensus",
                             cex.SeqLabels=0.5,
                             cex.ConsLabel=cex.SeqLabels,
-                            cex.RulerLabels=0.4,
-                            cex.ConsRulerLabels=cex.RulerLabels,
+                            cex.RulerLabels=0.45,
+                            cex.ConsRulerLabels=0.9,
                             colors=NULL,
                             linkAlpha=0.4){
   if (nrow(SeqInfo)>15) {

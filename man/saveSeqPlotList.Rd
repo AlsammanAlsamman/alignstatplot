@@ -4,7 +4,7 @@
 \alias{saveSeqPlotList}
 \title{save plot lists}
 \usage{
-saveSeqPlotList(PlotList, outFolder, width = 15, height = 10)
+saveSeqPlotList(PlotList, outFolder, width = 15, height = 10, format = "pdf")
 }
 \arguments{
 \item{PlotList}{list of plots}
@@ -14,6 +14,8 @@ saveSeqPlotList(PlotList, outFolder, width = 15, height = 10)
 \item{width}{plot width}
 
 \item{height}{plot height}
+
+\item{format}{file format/extension passed to \code{\link[ggplot2]{ggsave}} (e.g. "pdf", "png")}
 }
 \description{
 save plot lists

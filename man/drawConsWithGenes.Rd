@@ -12,8 +12,8 @@ drawConsWithGenes(
   consensusLabel = "Consensus",
   cex.SeqLabels = 0.5,
   cex.ConsLabel = cex.SeqLabels,
-  cex.RulerLabels = 0.4,
-  cex.ConsRulerLabels = cex.RulerLabels,
+  cex.RulerLabels = 0.45,
+  cex.ConsRulerLabels = 0.9,
   colors = NULL,
   linkAlpha = 0.4
 )
@@ -35,10 +35,12 @@ in relative to the other sequences}
 
 \item{cex.ConsLabel}{A number for the consensus label font size (default: \code{cex.SeqLabels})}
 
-\item{cex.RulerLabels}{A number for the base-pair ruler tick label font size of the sequences}
+\item{cex.RulerLabels}{A number for the base-pair ruler tick label font size of the
+sequences (each sequence only occupies a fraction of the circle, so this needs to stay
+smaller than \code{cex.ConsRulerLabels} to avoid overlap)}
 
 \item{cex.ConsRulerLabels}{A number for the base-pair ruler tick label font size of the
-consensus sector (default: \code{cex.RulerLabels})}
+consensus sector, which spans the whole circle and so has much more room per tick}
 
 \item{colors}{sector colors, one per sequence (default: \code{\link{getSeqColors}})}
 

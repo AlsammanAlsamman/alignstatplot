@@ -9,7 +9,7 @@ drawConsWithNoGenes(
   SeqAligned,
   geneLabels = NULL,
   cex.SeqLabels = 0.5,
-  cex.bpLabels = 0.3,
+  cex.bpLabels = 0.8,
   colors = NULL,
   bgColor = "#CCCCCC"
 )
@@ -24,7 +24,8 @@ drawConsWithNoGenes(
 
 \item{cex.SeqLabels}{A number for sequence labels font size}
 
-\item{cex.bpLabels}{A number for base pair labels font size}
+\item{cex.bpLabels}{A number for base pair labels font size (the single consensus axis
+spans the whole circle, so this can be much larger than a per-sequence ruler without overlap)}
 
 \item{colors}{sector colors, one per sequence (default: \code{\link{getSeqColors}})}
 

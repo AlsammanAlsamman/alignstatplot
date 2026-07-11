@@ -5,13 +5,14 @@
 #' @param geneLabels custom display names for the sequences, one per row of \code{SeqInfo}
 #' (default: \code{SeqInfo$Name})
 #' @param cex.SeqLabels A number for sequence labels font size
-#' @param cex.bpLabels A number for base pair labels font size
+#' @param cex.bpLabels A number for base pair labels font size (the single consensus axis
+#' spans the whole circle, so this can be much larger than a per-sequence ruler without overlap)
 #' @param colors sector colors, one per sequence (default: \code{\link{getSeqColors}})
 #' @param bgColor background segment color for the base track
 #'
 #' @return plot an alignment circle
 #' @export
-drawConsWithNoGenes<-function(SeqInfo,SeqAligned,geneLabels=NULL,cex.SeqLabels=0.5,cex.bpLabels=0.3,
+drawConsWithNoGenes<-function(SeqInfo,SeqAligned,geneLabels=NULL,cex.SeqLabels=0.5,cex.bpLabels=0.8,
                               colors=NULL,bgColor="#CCCCCC")
 {
   if (!is.null(geneLabels) && length(geneLabels) != nrow(SeqInfo)) {
