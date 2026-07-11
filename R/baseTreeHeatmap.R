@@ -1,3 +1,20 @@
+#' The tip order ape::plot.phylo() actually drew tips in, top-to-bottom
+#'
+#' @description tree$tip.label's raw storage order generally does NOT match the order
+#' \code{ape::plot.phylo()} draws tips in (that depends on tree topology, not input
+#' order). Must be called immediately after a \code{plot.phylo(tree, ...)} call, since it
+#' reads the y-coordinates ape just assigned each tip from \code{ape::.PlotPhyloEnv}.
+#' @param tree the same "phylo" object just passed to \code{plot.phylo()}
+#' @return character vector of \code{tree$tip.label}, reordered by ascending plotted
+#' y-coordinate (bottom-to-top, matching \code{graphics::image()}'s y-axis convention)
+plottedTipOrder<-function(tree)
+{
+  lastPP<-get("last_plot.phylo", envir = ape::.PlotPhyloEnv)
+  tipY<-lastPP$yy[seq_along(tree$tip.label)]
+  names(tipY)<-tree$tip.label
+  names(sort(tipY))
+}
+
 #' Draw a phylogenetic tree next to a heatmap of a matrix, base graphics
 #'
 #' @description Internal helper replacing \code{phytools::phylo.heatmap()}.
@@ -24,9 +41,6 @@ baseTreeHeatmap<-function(tree, X, fsize = c(1, 1, 1), colors = NULL, standardiz
     sdv<-apply(X, 2, function(v) stats::sd(v, na.rm = TRUE))
     X<-sweep(sweep(X, 2, colMeans(X, na.rm = TRUE), "-"), 2, sdv, "/")
   }
-  #Reorder rows to match the tree's tip order - same alignment contract as
-  #phylo.heatmap()'s X <- X[cw$tip.label, ].
-  X<-X[tree$tip.label, , drop = FALSE]
   if (is.null(colors)) colors<-grDevices::heat.colors(20)[20:1]
 
   n_row<-nrow(X); n_col<-ncol(X)
@@ -34,8 +48,27 @@ baseTreeHeatmap<-function(tree, X, fsize = c(1, 1, 1), colors = NULL, standardiz
   layout_mat<-if (legend) matrix(c(1, 2, 3), nrow = 1) else matrix(c(1, 2), nrow = 1)
   graphics::layout(layout_mat, widths = widths)
 
-  graphics::par(mar = c(3, 1, 2, 0))
+  #Both panels use the same top/bottom margin so their plot regions are the
+  #same height and tree tips line up with heatmap rows pixel-for-pixel,
+  #regardless of how much room the heatmap's x-axis labels need.
+  graphics::par(mar = c(8, 1, 2, 0))
   ape::plot.phylo(tree, cex = fsize[1], label.offset = 0.01)
+
+  #Reorder rows to match the tree's plotted tip order, so heatmap rows always
+  #line up with the tips they're drawn beside, regardless of tree topology.
+  plottedOrder<-plottedTipOrder(tree)
+  #For a square matrix whose columns are the same entities as the tips (e.g. a
+  #distance matrix), also reorder columns to match, so the diagonal (self vs
+  #self) reads as a clean visual line instead of a scattered pattern. Columns
+  #use the reverse order of rows so the diagonal runs the conventional
+  #top-left-to-bottom-right way (rows go bottom-to-top in image()'s y-axis,
+  #so mirroring the columns left-to-right undoes that and restores the usual
+  #reading direction).
+  if (all(colnames(X) %in% tree$tip.label)) {
+    X<-X[plottedOrder, rev(plottedOrder), drop = FALSE]
+  } else {
+    X<-X[plottedOrder, , drop = FALSE]
+  }
 
   graphics::par(mar = c(8, 0, 2, 1))
   graphics::image(x = seq_len(n_col), y = seq_len(n_row), z = t(X),

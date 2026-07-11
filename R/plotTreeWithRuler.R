@@ -20,6 +20,9 @@ plotTreeWithRuler<-function(SeqInfo,myClustalWAlignment,
   plot.window(xlim = phylo$x.lim,ylim = phylo$y.lim)
   #Add phylo
   par(new = T)
-  #Add a x axis that looks decent
-  axis(1,at =seq(from =0, to = phylo$x.lim[2], by = round(phylo$x.lim[2]/10,digits = 2)),cex.axis = axis.cex)
+  #Round, evenly-spaced tick marks (pretty() adapts to the tree's actual
+  #branch-length range, unlike a fixed "10 steps" heuristic which can produce
+  #an awkward tick count/spacing depending on the data)
+  axis(1, at = pretty(c(0, phylo$x.lim[2])), cex.axis = axis.cex)
+  title(xlab = "Genetic distance")
 }
