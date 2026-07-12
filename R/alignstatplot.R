@@ -52,7 +52,7 @@ alignstatplot<-function(SeqFile,AlignMethod="ClustalW",AnnoFile="",OutFolder="ou
   if (Seqn<15) {
     if (Verbose==T) print(paste("Plot Sequence alignment with consensus and links"))
     pdf(paste0(OutFolder,"/","SeqAlignmentCircleWithLinks.pdf"))
-    drawConsWithGenes(SeqInfo,SeqAligned)
+    drawConsWithGenes(SeqInfo,SeqAligned,cex.SeqLabels = fontscale)
     dev.off()
   }
 

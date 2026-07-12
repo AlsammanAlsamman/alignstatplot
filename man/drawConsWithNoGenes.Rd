@@ -8,7 +8,7 @@ drawConsWithNoGenes(
   SeqInfo,
   SeqAligned,
   geneLabels = NULL,
-  cex.SeqLabels = 0.5,
+  cex.SeqLabels = 0,
   cex.bpLabels = 0.8,
   colors = NULL,
   bgColor = "#CCCCCC"
@@ -22,7 +22,9 @@ drawConsWithNoGenes(
 \item{geneLabels}{custom display names for the sequences, one per row of \code{SeqInfo}
 (default: \code{SeqInfo$Name})}
 
-\item{cex.SeqLabels}{A number for sequence labels font size}
+\item{cex.SeqLabels}{A number for sequence labels font size; 0 (default) picks a size
+automatically based on the number of sequences (each sequence's label sits on its own
+concentric ring, whose radial height shrinks as more sequences are added)}
 
 \item{cex.bpLabels}{A number for base pair labels font size (the single consensus axis
 spans the whole circle, so this can be much larger than a per-sequence ruler without overlap)}

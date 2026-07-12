@@ -10,7 +10,7 @@ drawConsWithGenes(
   consZoomFactor = 3,
   geneLabels = NULL,
   consensusLabel = "Consensus",
-  cex.SeqLabels = 0.5,
+  cex.SeqLabels = 1,
   cex.ConsLabel = cex.SeqLabels,
   cex.RulerLabels = 0.45,
   cex.ConsRulerLabels = 0.9,
