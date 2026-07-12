@@ -14,6 +14,30 @@ tickStep<-function(from, to)
   max(1, step)
 }
 
+#' Evenly-spaced tick positions from \code{from} to \code{to}, endpoint included
+#'
+#' @description Combines \code{\link{tickStep}} and \code{\link{seqWithLast}}, with one
+#' extra safeguard: \code{seqWithLast()} always appends the exact endpoint, which can land
+#' close enough to the preceding regular tick to visually crowd/overlap once real labels
+#' (not just points) are drawn -- especially on a narrow circos sector, where there's very
+#' little angular room for the last pair of labels. Label *text* width doesn't shrink just
+#' because the gap is smaller, so even a ~60-75% gap can still look crossed in practice; when
+#' the gap is less than 80% of the regular step, the second-to-last tick is dropped so only
+#' the true endpoint remains.
+#' @param from range start
+#' @param to range end
+#' @return numeric vector of tick positions, always including \code{from} and \code{to}
+niceTicks<-function(from, to)
+{
+  step<-tickStep(from, to)
+  ticks<-seqWithLast(from, to, by = step)
+  n<-length(ticks)
+  if (n >= 3 && (ticks[n] - ticks[n - 1]) < step * 0.8) {
+    ticks<-ticks[-(n - 1)]
+  }
+  ticks
+}
+
 #' Drawing sequence basic structure including inverting the consensus direction without links
 #' @param mycircos.Seq.Sectors Table of genes as sectors of the circle plot
 #' @param inv The name of the sequence that will be inverted -- mostly the consensus
@@ -35,13 +59,13 @@ drawGenes<-function(mycircos.Seq.Sectors,inv,labelCexScale=0.4,consLabelCexScale
                  if(CELL_META$sector.index == inv) {
                    from<-mycircos.Seq.Sectors[which(mycircos.Seq.Sectors$sectors == inv), 2]
                    to<-mycircos.Seq.Sectors[which(mycircos.Seq.Sectors$sectors == inv), 3]
-                   major.by = seqWithLast(from, to, by = tickStep(from, to))
+                   major.by = niceTicks(from, to)
                    circos.axis(major.at = rev(major.by), labels = paste0(major.by,"bp"), #, "bp"
                                labels.cex = consLabelCexScale * par("cex"))
                  }else {
                    from<-mycircos.Seq.Sectors[which(mycircos.Seq.Sectors$sectors == CELL_META$sector.index), 2]
                    to<-mycircos.Seq.Sectors[which(mycircos.Seq.Sectors$sectors == CELL_META$sector.index), 3]
-                   major.by = seqWithLast(from, to, by = tickStep(from, to))
+                   major.by = niceTicks(from, to)
                    circos.axis(major.at = major.by, labels = paste0(major.by), #, "bp"
                                labels.cex = labelCexScale * par("cex"))
                  }
