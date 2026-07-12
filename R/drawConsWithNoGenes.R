@@ -14,19 +14,20 @@
 #'
 #' @return plot an alignment circle
 #' @export
-drawConsWithNoGenes<-function(SeqInfo,SeqAligned,geneLabels=NULL,cex.SeqLabels=0,cex.bpLabels=0.8,
+drawConsWithNoGenes<-function(SeqInfo,SeqAligned,geneLabels=NULL,cex.SeqLabels=0,cex.bpLabels=1.4,
                               colors=NULL,bgColor="#CCCCCC")
 {
   if (!is.null(geneLabels) && length(geneLabels) != nrow(SeqInfo)) {
     stop("geneLabels must have one entry per sequence (", nrow(SeqInfo), "), got ", length(geneLabels), ".")
   }
   if (cex.SeqLabels==0) {
+    #Each sequence's label sits on its own concentric ring within a fixed
+    #track.height, so the radial room per label shrinks as ~1/n -- a fixed
+    #tier per n-bucket (the previous approach) undershoots badly at the
+    #boundaries (e.g. n=35 got the same 0.6 as n=21). Scale continuously
+    #instead, anchored to n=10 -> 1.3 (verified not to overlap).
     n<-nrow(SeqInfo)
-    cex.SeqLabels<-if (n>100) 0.3
-      else if (n>50) 0.4
-      else if (n>20) 0.6
-      else if (n>10) 0.9
-      else 1.3
+    cex.SeqLabels<-max(0.15, min(1.3, 13 / n))
   }
   SeqLabelsToDraw<-if (is.null(geneLabels)) SeqInfo$Name else geneLabels
   #Sequences colors

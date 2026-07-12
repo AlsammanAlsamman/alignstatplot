@@ -9,7 +9,7 @@ drawConsWithNoGenes(
   SeqAligned,
   geneLabels = NULL,
   cex.SeqLabels = 0,
-  cex.bpLabels = 0.8,
+  cex.bpLabels = 1.4,
   colors = NULL,
   bgColor = "#CCCCCC"
 )
