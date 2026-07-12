@@ -547,6 +547,57 @@ SNPClusterPlotWithTree(SeqInfo,myClustalWAlignment,Cluster,MaxCluster = 3, Minim
 
 <img src="man/figures/README-unnamed-chunk-28-1.png" width="100%" />
 
+## Impact-based QC: keep only the highest-impact SNPs
+
+With hundreds of SNPs, the dendrogram above gets crowded well before it gets
+uninformative – most SNPs barely move the clustering at all. `SNPClusterImpact()`
+scores every SNP by how much it actually drives the retained PCA/MCA dimensions the
+clustering above is built on (its contribution, weighted by how much variance each
+dimension explains), so low-impact SNPs can be identified and filtered out before
+re-clustering.
+
+``` r
+ImpactTable<-SNPClusterImpact(Cluster)
+head(ImpactTable)
+#>      SNP    Impact       Cos2 Cluster
+#> 930 N930 0.3123553 0.05119092       3
+#> 931 N931 0.3093967 0.04986123       3
+#> 921 N921 0.3049479 0.05054261       2
+#> 926 N926 0.2995618 0.05110840       3
+#> 923 N923 0.2991817 0.05072784       2
+#> 913 N913 0.2892038 0.04894040       3
+```
+
+`plotSNPClusterImpact()` sorts SNPs by impact and shows both the score itself and the
+cumulative share of total impact captured, so a cutoff can be chosen by eye instead of
+guessed – the dashed line marks `filterHighImpactSNPs()`’s default cutoff (the elbow of
+the curve), and can be overridden with an explicit `topN` or `minImpact`.
+
+``` r
+plotSNPClusterImpact(ImpactTable)
+```
+
+<img src="man/figures/README-snp-cluster-impact-plot-1.png" width="100%" />
+
+Re-clustering on just the kept SNPs gives a much less crowded, equally structured
+dendrogram:
+
+``` r
+SeqAlignedTableFilteredHQ<-filterHighImpactSNPs(SeqAlignedTableFiltered, ImpactTable)
+dim(SeqAlignedTableFilteredHQ)
+#> [1] 10 40
+```
+
+``` r
+ClusterHQ<-SNPCluster(SeqAlignedTableFilteredHQ)
+```
+
+``` r
+SNPClusterPlot1DTree(ClusterHQ)
+```
+
+<img src="man/figures/README-snp-cluster-impact-dendro-1.png" width="100%" />
+
 # Genomic & statistical analysis
 
 Beyond the alignment and clustering tools above, alignstatplot provides classic

@@ -407,6 +407,45 @@ SNPClusterPlotWithTree(SeqInfo,myClustalWAlignment,Cluster,MaxCluster = 3, Minim
 
 ```
 
+## Impact-based QC: keep only the highest-impact SNPs
+
+With hundreds of SNPs, the dendrogram above gets crowded well before it gets
+uninformative -- most SNPs barely move the clustering at all. `SNPClusterImpact()`
+scores every SNP by how much it actually drives the retained PCA/MCA dimensions the
+clustering above is built on (its contribution, weighted by how much variance each
+dimension explains), so low-impact SNPs can be identified and filtered out before
+re-clustering.
+
+```{r snp-cluster-impact-table}
+ImpactTable<-SNPClusterImpact(Cluster)
+head(ImpactTable)
+```
+
+`plotSNPClusterImpact()` sorts SNPs by impact and shows both the score itself and the
+cumulative share of total impact captured, so a cutoff can be chosen by eye instead of
+guessed -- the dashed line marks `filterHighImpactSNPs()`'s default cutoff (the elbow of
+the curve), and can be overridden with an explicit `topN` or `minImpact`.
+
+```{r snp-cluster-impact-plot, fig.height=7}
+plotSNPClusterImpact(ImpactTable)
+```
+
+Re-clustering on just the kept SNPs gives a much less crowded, equally structured
+dendrogram:
+
+```{r snp-cluster-impact-filter}
+SeqAlignedTableFilteredHQ<-filterHighImpactSNPs(SeqAlignedTableFiltered, ImpactTable)
+dim(SeqAlignedTableFilteredHQ)
+```
+
+```{r snp-cluster-impact-recluster, warning=FALSE}
+ClusterHQ<-SNPCluster(SeqAlignedTableFilteredHQ)
+```
+
+```{r snp-cluster-impact-dendro, fig.width=max(10, ncol(SeqAlignedTableFilteredHQ)/12), fig.height=6}
+SNPClusterPlot1DTree(ClusterHQ)
+```
+
 # Genomic & statistical analysis
 
 Beyond the alignment and clustering tools above, alignstatplot provides classic
