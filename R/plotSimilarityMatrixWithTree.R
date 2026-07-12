@@ -19,22 +19,22 @@ plotSimilarityMatrixWithTree<-function(seqInfo,seqAlignment,
   SeqTree<-getTree(DistMatrixTable)
 
   #gene font size
-  genfsize<-0.8
+  genfsize<-1.4
   seqnum<-nrow(DistMatrixTable)
   if (fontsizescale!=0) {
     genfsize<-fontsizescale
   } else if (seqnum > 100) {
-    genfsize<- 0.2
+    genfsize<- 0.35
     } else if (seqnum > 80 && seqnum < 100) {
-      genfsize<- 0.3
-    } else if (seqnum > 60 && seqnum < 80) {
-      genfsize<- 0.4
-    } else if (seqnum > 40 && seqnum < 60) {
-      genfsize<- 0.4
-    } else if (seqnum > 20 && seqnum < 40) {
       genfsize<- 0.5
-    } else if (seqnum < 20) {
+    } else if (seqnum > 60 && seqnum < 80) {
       genfsize<- 0.7
+    } else if (seqnum > 40 && seqnum < 60) {
+      genfsize<- 0.8
+    } else if (seqnum > 20 && seqnum < 40) {
+      genfsize<- 1.0
+    } else if (seqnum < 20) {
+      genfsize<- 1.4
     }
 
 

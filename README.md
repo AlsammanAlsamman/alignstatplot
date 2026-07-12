@@ -290,8 +290,10 @@ knitr::include_graphics(paste0("Example_Out","/SeqAlignmentCircleWithNoLinks.png
 ## Draw Similarity distance matrix
 
 ``` r
-# The similarity matrix as a heatmap
-distanceHeatmap(DistTable,fontsizescale = 0.2)
+# The similarity matrix as a heatmap. fontsizescale controls the row/column
+# label size (0, the default, picks a size automatically based on the number
+# of sequences).
+distanceHeatmap(DistTable)
 ```
 
 <img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
@@ -314,6 +316,7 @@ plotTreeWithGenes(SeqInfo,myClustalWAlignment,AnnoFile)
 
 ``` r
 #The phylogenetic tree in combine with simialrity matrix
+#fontsizescale controls the tip/label size the same way as above.
 
 plotSimilarityMatrixWithTree(SeqInfo,myClustalWAlignment)
 ```

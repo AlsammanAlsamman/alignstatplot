@@ -11,15 +11,15 @@ distanceHeatmap<-function(DistTable,fontsizescale=0,colors=NULL)
   # if fontsizescale is not set calculate it
   seqn<-nrow(DistTable)
   if (seqn>1 && seqn<20 && fontsizescale==0) {
-    fontsizescale<-0.5
+    fontsizescale<-1.2
   } else if (seqn>20 && seqn<50&& fontsizescale==0) {
-    fontsizescale<-0.4
+    fontsizescale<-0.9
   } else if (seqn>50 && seqn<100&& fontsizescale==0) {
-    fontsizescale<-0.3
+    fontsizescale<-0.6
   } else if (seqn>100 && seqn<200&& fontsizescale==0) {
-    fontsizescale<-0.2
+    fontsizescale<-0.4
   } else if (seqn>200 && fontsizescale==0) {
-    fontsizescale<-0.1
+    fontsizescale<-0.2
   }
   if (is.null(colors)) {
     pheatmap(as.matrix(DistTable),fontsize = nrow(DistTable)*fontsizescale)

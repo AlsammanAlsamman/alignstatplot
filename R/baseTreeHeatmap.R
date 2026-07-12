@@ -54,7 +54,9 @@ baseTreeHeatmap<-function(tree, X, fsize = c(1, 1, 1), colors = NULL, standardiz
   devWidthIn<-graphics::par("din")[1]
   labelWidthIn<-max(graphics::strwidth(tree$tip.label, units = "inches", cex = fsize[1]))
   branchAreaIn<-1.2
-  legendWidthIn<-if (legend) max(0.7, devWidthIn * 0.08) else 0
+  #Scales with fsize[3] too, so the range labels (e.g. "0.08") don't get
+  #clipped against the legend panel's right edge at a larger legend font.
+  legendWidthIn<-if (legend) max(0.7, devWidthIn * 0.08) * max(1, fsize[3]) else 0
   minHeatmapWidthIn<-devWidthIn * 0.3
   #ape::plot.phylo() needs noticeably more room than strwidth() alone reports
   #once actually drawn inside a layout() panel (vs. a full-width standalone
@@ -98,7 +100,11 @@ baseTreeHeatmap<-function(tree, X, fsize = c(1, 1, 1), colors = NULL, standardiz
 
   if (legend) {
     rng<-range(X, na.rm = TRUE)
-    graphics::par(mar = c(8, 0.5, 2, 2))
+    #Right margin is in fixed "lines" units, not scaled by cex.axis, so a
+    #bigger legend font needs more margin too or its range labels (e.g.
+    #"0.08") get clipped at the device edge regardless of the panel's own
+    #layout() width.
+    graphics::par(mar = c(8, 0.5, 2, 2 * max(1, fsize[3])))
     graphics::image(x = 1, y = seq_along(colors), z = matrix(seq_along(colors), nrow = 1),
                     col = colors, axes = FALSE, xlab = "", ylab = "")
     graphics::axis(4, at = c(1, length(colors)), labels = round(rng, 2), las = 1, cex.axis = fsize[3])
