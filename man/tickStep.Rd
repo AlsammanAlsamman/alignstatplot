@@ -4,19 +4,25 @@
 \alias{tickStep}
 \title{A "nice" tick spacing for an axis spanning \code{from} to \code{to}}
 \usage{
-tickStep(from, to)
+tickStep(from, to, n = 8)
 }
 \arguments{
 \item{from}{range start}
 
 \item{to}{range end}
+
+\item{n}{target tick count passed to \code{pretty()}}
 }
 \value{
 a single positive number: the spacing between ticks
 }
 \description{
-Targets ~8 ticks regardless of the actual range, via \code{pretty()},
-instead of a fixed bp interval -- a fixed interval (e.g. one tick every 200bp) works
-fine for a ~1000bp example sequence but produces hundreds of overlapping,
-unreadable ticks on a real tens-of-kb genome.
+Targets \code{n} ticks regardless of the actual range, via
+\code{pretty()}, instead of a fixed bp interval -- a fixed interval (e.g. one tick
+every 200bp) works fine for a ~1000bp example sequence but produces hundreds of
+overlapping, unreadable ticks on a real tens-of-kb genome. \code{n} itself should be
+scaled down by the caller for axes with little room to draw labels in (e.g. a narrow
+circos sector) -- a fixed target regardless of available space just moves the
+overlap problem from "too many ticks for the data range" to "too many ticks for the
+screen space".
 }

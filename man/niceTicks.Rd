@@ -4,12 +4,14 @@
 \alias{niceTicks}
 \title{Evenly-spaced tick positions from \code{from} to \code{to}, endpoint included}
 \usage{
-niceTicks(from, to)
+niceTicks(from, to, n = 8)
 }
 \arguments{
 \item{from}{range start}
 
 \item{to}{range end}
+
+\item{n}{target tick count, forwarded to \code{\link{tickStep}}}
 }
 \value{
 numeric vector of tick positions, always including \code{from} and \code{to}

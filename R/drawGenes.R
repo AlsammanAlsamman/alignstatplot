@@ -1,15 +1,20 @@
 #' A "nice" tick spacing for an axis spanning \code{from} to \code{to}
 #'
-#' @description Targets ~8 ticks regardless of the actual range, via \code{pretty()},
-#' instead of a fixed bp interval -- a fixed interval (e.g. one tick every 200bp) works
-#' fine for a ~1000bp example sequence but produces hundreds of overlapping,
-#' unreadable ticks on a real tens-of-kb genome.
+#' @description Targets \code{n} ticks regardless of the actual range, via
+#' \code{pretty()}, instead of a fixed bp interval -- a fixed interval (e.g. one tick
+#' every 200bp) works fine for a ~1000bp example sequence but produces hundreds of
+#' overlapping, unreadable ticks on a real tens-of-kb genome. \code{n} itself should be
+#' scaled down by the caller for axes with little room to draw labels in (e.g. a narrow
+#' circos sector) -- a fixed target regardless of available space just moves the
+#' overlap problem from "too many ticks for the data range" to "too many ticks for the
+#' screen space".
 #' @param from range start
 #' @param to range end
+#' @param n target tick count passed to \code{pretty()}
 #' @return a single positive number: the spacing between ticks
-tickStep<-function(from, to)
+tickStep<-function(from, to, n = 8)
 {
-  breaks<-pretty(c(from, to), n = 8)
+  breaks<-pretty(c(from, to), n = n)
   step<-if (length(breaks) > 1) breaks[2] - breaks[1] else (to - from)
   max(1, step)
 }
@@ -26,14 +31,15 @@ tickStep<-function(from, to)
 #' the true endpoint remains.
 #' @param from range start
 #' @param to range end
+#' @param n target tick count, forwarded to \code{\link{tickStep}}
 #' @return numeric vector of tick positions, always including \code{from} and \code{to}
-niceTicks<-function(from, to)
+niceTicks<-function(from, to, n = 8)
 {
-  step<-tickStep(from, to)
+  step<-tickStep(from, to, n = n)
   ticks<-seqWithLast(from, to, by = step)
-  n<-length(ticks)
-  if (n >= 3 && (ticks[n] - ticks[n - 1]) < step * 0.8) {
-    ticks<-ticks[-(n - 1)]
+  nt<-length(ticks)
+  if (nt >= 3 && (ticks[nt] - ticks[nt - 1]) < step * 0.8) {
+    ticks<-ticks[-(nt - 1)]
   }
   ticks
 }
@@ -56,16 +62,26 @@ drawGenes<-function(mycircos.Seq.Sectors,inv,labelCexScale=0.4,consLabelCexScale
                track.height = uh(3, "mm"))
   circos.track(ylim = c(0, 1), bg.border = NA, cell.padding = c(0, 0, 0, 0),
                track.height = uh(3, "mm"), panel.fun = function(x, y) {
+                 #A sector only has as many degrees of arc as its share of the circle --
+                 #a fixed tick-count target (e.g. always ~8) ignores that, so a sector
+                 #with 10+ siblings and little angular room ends up with as many ticks as
+                 #one that spans most of the circle, and the labels overlap. Scale the
+                 #tick-count target down with the sector's actual angular width instead.
+                 sectorDeg<-abs(get.cell.meta.data("cell.end.degree") - get.cell.meta.data("cell.start.degree"))
                  if(CELL_META$sector.index == inv) {
                    from<-mycircos.Seq.Sectors[which(mycircos.Seq.Sectors$sectors == inv), 2]
                    to<-mycircos.Seq.Sectors[which(mycircos.Seq.Sectors$sectors == inv), 3]
-                   major.by = niceTicks(from, to)
+                   #Consensus labels are wider ("123bp") and drawn at a bigger cex than
+                   #the plain-number gene labels below, so they need more degrees per tick.
+                   n<-max(2, min(8, round(sectorDeg / 25)))
+                   major.by = niceTicks(from, to, n = n)
                    circos.axis(major.at = rev(major.by), labels = paste0(major.by,"bp"), #, "bp"
                                labels.cex = consLabelCexScale * par("cex"))
                  }else {
                    from<-mycircos.Seq.Sectors[which(mycircos.Seq.Sectors$sectors == CELL_META$sector.index), 2]
                    to<-mycircos.Seq.Sectors[which(mycircos.Seq.Sectors$sectors == CELL_META$sector.index), 3]
-                   major.by = niceTicks(from, to)
+                   n<-max(2, min(8, round(sectorDeg / 12)))
+                   major.by = niceTicks(from, to, n = n)
                    circos.axis(major.at = major.by, labels = paste0(major.by), #, "bp"
                                labels.cex = labelCexScale * par("cex"))
                  }
