@@ -751,3 +751,19 @@ monpop <- df2genind(SeqBinaryTableByFreqRef,
 #> // Observed heterozygosity: 0
 #knitr::knit_exit()
 ```
+
+## Citation
+
+If you use this package, please cite:
+
+> Alsamman, A.M., El Allali, A., Mokhtar, M.M., Al-Sham'aa, K., Nassar, A.E.,
+> Mousa, K.H. and Kehel, Z., 2023. AlignStatPlot: An R package and online
+> tool for robust sequence alignment statistics and innovative visualization
+> of big data. *PLoS ONE*, 18(9), p.e0291204.
+> https://doi.org/10.1371/journal.pone.0291204
+
+Or in R:
+
+``` r
+citation("alignstatplot")
+```
