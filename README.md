@@ -15,6 +15,23 @@ The tool is available online :
 
 https://bioinformatics.um6p.ma/AlignStatPlot/
 
+## Python version, CLI, and GUIs
+
+Prefer Python, or want a point-and-click app instead of R code? [**alignstatplot-py**](https://github.com/AlsammanAlsamman/alignstatplotPy)
+is a companion Python package that reimplements the same categories of
+analysis (sequence stats, nucleotide diversity, distance/phylogenetic trees,
+PCA-based SNP clustering, and the circular/dashboard plots) on NumPy/pandas/
+SciPy/scikit-learn/Biopython/Matplotlib. It ships as:
+
+* a `pip`-installable library + CLI (`alignstatplot run --fasta ... --anno ...`),
+* a desktop GUI (`alignstatplot gui`, PySide6/Qt) for uploading a FASTA file and browsing plots, and
+* a local web GUI (`alignstatplot web`) with a drag-and-drop browser frontend.
+
+This R package remains the reference implementation and is still actively
+maintained; see alignstatplot-py's README for how closely its results match
+this package's numerically (same statistics and plot types, not bit-for-bit
+identical, since it doesn't depend on R/ClustalW/FactoMineR/ape).
+
 ## What's new in 0.2.0
 
 This is an updated version focused on making the package lighter and easier to install, and
